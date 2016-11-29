@@ -1,0 +1,5 @@
+Comandi per dump:
+cd
+mysqldump axapalm > axapalm.sql -u root -p
+
+/opt/lampp/bin/mysql < /opt/lampp/htdocs/equita/dumps/equita.sql -u root -p
