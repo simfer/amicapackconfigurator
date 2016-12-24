@@ -49,6 +49,24 @@
         "hideMethod": "fadeOut"
     };
 
+    console.log(localStorage.message);
+
+    var message = localStorage.message;
+    var messagetype = localStorage.messagetype;
+
+    if (message && message !== "") {
+        console.log("pippo");
+        var messagetype = localStorage.messagetype;
+        if (messagetype == "success") {
+            toastr.info("OK: " + message);
+        } else {
+            toastr.error("ERRORE: " + message);
+
+        }
+        localStorage.messtype = "";
+        localStorage.message = "";
+    }
+
     jQuery.validator.setDefaults({
         highlight: function (element, errorClass, validClass) {
             if (element.type === "radio") {

@@ -28,7 +28,7 @@ if (isset($_SESSION ["idutente"]) && !empty($_SESSION ["idutente"])) {
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-    <title>Gestione preventivi AMICA</title>
+    <title>AMICA Pack Configurator</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -81,7 +81,8 @@ if (isset($_SESSION ["idutente"]) && !empty($_SESSION ["idutente"])) {
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">Gestione preventivi AMICA</a>
+            <a class="navbar-brand" href="index.html" style="padding-top: 5px">
+                <div><img src="images/logo-palmesano.png" style="width: 80px">AMICA Pack Configurator</div></a>
         </div>
         <!-- /.navbar-header -->
         <ul class="nav navbar-top-links navbar-right">

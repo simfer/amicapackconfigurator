@@ -2086,9 +2086,8 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                 var preventivo = {};
                 preventivo.idpreventivo = idpreventivo;
                 preventivo.idcliente = idcliente;
-                preventivo.premiototale = form_data.axa.totaleaxa + form_data.augusta.totaleaugusta +
-                    form_data.accessori.totaleaccessori + form_data.copertureaggiuntive.totalecopertureaggiuntive;
-
+                preventivo.premiototale = axa.totaleaxa + augusta.totaleaugusta +
+                    accessori.totaleaccessori + copertureaggiuntive.totalecopertureaggiuntive;
                 preventivo.operazione = ($("#idpreventivo").val() != "" ? "M" : "I");
                 form_data.preventivo = preventivo;
                 form_data.ajax_function = "SalvaPreventivo";
@@ -2101,10 +2100,14 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                     data: form_data,
                     cache: false,
                     success: function (response) {
+                        localStorage.messagetype = "success";
+                        localStorage.message = "Preventivo inserito correttamente!";
                         console.log("success");
                         console.log(response);
                     },
                     error: function (response) {
+                        localStorage.messagetype = "success";
+                        localStorage.message = response["result"];
                         console.log(response);
                     }
                 });

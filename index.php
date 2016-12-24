@@ -14,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>AXAPALM - Accesso area riservata</title>
+    <title>AMICA Pack Configurator - Accesso area riservata</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -34,6 +34,9 @@
 
     <div class="container">
         <div class="row">
+            <div class="col-md-12" style="text-align: center">
+                <h1>AMICA PACK CONFIGURATOR</h1>
+            </div>
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">

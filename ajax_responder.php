@@ -1005,28 +1005,39 @@ function SalvaPreventivo()
                 $stmt->execute();
 
                 // Query POLIZZEAXA
-                $sql = GeneraQuery($_POST["axa"], "polizzeaxa", $loggedUser, $operazione);
-                $fullSql .= $sql;
-                $stmt = $conn->prepare($sql);
-                $stmt->execute();
+                $axa = $_POST["axa"];
+                if ($axa) {
+                    $sql = GeneraQuery($_POST["axa"], "polizzeaxa", $loggedUser, $operazione);
+                    $fullSql .= $sql;
+                    $stmt = $conn->prepare($sql);
+                    $stmt->execute();
+                }
 
                 // Query POLIZZEAUGUSTA
-                $sql = GeneraQuery($_POST["augusta"], "polizzeaugusta", $loggedUser, $operazione);
-                $fullSql .= $sql;
-                $stmt = $conn->prepare($sql);
-                $stmt->execute();
+                $augusta = $_POST["augusta"];
+                if($augusta) {
+                    $sql = GeneraQuery($_POST["augusta"], "polizzeaugusta", $loggedUser, $operazione);
+                    $fullSql .= $sql;
+                    $stmt = $conn->prepare($sql);
+                    $stmt->execute();
+                }
 
                 // Query POLIZZEACCESSORI
-                $sql = PreparaQueryAccessori($_POST["accessori"], $loggedUser, $operazione);
-                $fullSql .= $sql;
-                $stmt = $conn->prepare($sql);
-                $stmt->execute();
-
+                $accessori = $_POST["accessori"];
+                if($accessori) {
+                    $sql = PreparaQueryAccessori($_POST["accessori"], $loggedUser, $operazione);
+                    $fullSql .= $sql;
+                    $stmt = $conn->prepare($sql);
+                    $stmt->execute();
+                }
                 // Query POLIZZECOPERTUREAGGIUNTIVE
-                $sql = PreparaQueryCopertureAggiuntive($_POST["copertureaggiuntive"], $loggedUser, $operazione);
-                $fullSql .= $sql;
-                $stmt = $conn->prepare($sql);
-                $stmt->execute();
+                $copertureaggiuntive = $_POST["copertureaggiuntive"];
+                if ($copertureaggiuntive) {
+                    $sql = PreparaQueryCopertureAggiuntive($_POST["copertureaggiuntive"], $loggedUser, $operazione);
+                    $fullSql .= $sql;
+                    $stmt = $conn->prepare($sql);
+                    $stmt->execute();
+                }
 
                 // Query PREVENTIVI
                 $sql = GeneraQuery($_POST["preventivo"], "preventivi", $loggedUser, $operazione);
