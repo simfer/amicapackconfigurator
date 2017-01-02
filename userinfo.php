@@ -95,7 +95,7 @@ $idutente = $_SESSION ["idutente"];
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><?= $title ?></h1>
+            <h1 class="page-header">Il mio profilo</h1>
             <h5 style="color: #ff7c0a;text-indent: 50px;">I campi contrassegnati con * sono obbligatori</h5>
         </div>
     </div>
@@ -278,30 +278,45 @@ $idutente = $_SESSION ["idutente"];
                             action: function (dialog) {
                                 dialog.close();
                                 //set the form data
-                                var utente = {
-                                    idutente: $("#idutente").val(),
+
+                                var form_data = {
+                                    ajax_function: "SaveRecord",
+                                    table:"utenti",
+                                    key:"idutente",
+                                    keyvalue: $("#idutente").val(),
+                                    autoincrement:"true",
+                                    modificatoda:"1",
+                                    operazione:"I",
+                                    attivo:"1"
+                                };
+
+                                var columns = {
                                     cognome: $("#cognome").val(),
                                     nome: $("#nome").val(),
                                     username: $("#username").val(),
-                                    password: $("#password").val(),
-                                    password2: $("#password2").val(),
-                                    email: $("#email").val(),
-                                    ajax_function: "SalvaUtente"
+                                    password: $.md5($("#password").val()),
+                                    email: $("#email").val()
                                 };
+
+                                form_data.columns = columns;
 
                                 //create and submit the ajax request
                                 //invio dati
+
                                 $.ajax({
                                     type: "POST",
+                                    dataType: "json",
                                     url: "ajax_responder.php",
-                                    data: utente,
+                                    data: form_data,
                                     success: function (response) {
-                                        var res = JSON.parse(response);
-                                        if (res["status"] === "success") {
-                                            toastr.info('Profilo utente salvato con successo!');
+                                        //var res = JSON.parse(response);
+                                        if (response["status"] === "success") {
+                                            //toastr.info('Profilo utente salvato con successo!');
+                                            localStorage.messagetype = "success";
+                                            localStorage.message = "Profilo utente salvato con successo!";
                                             location.href = "home.php";
                                         } else {
-                                            toastr.error("ERRORE: " + res['result']);
+                                            toastr.error("ERRORE: " + response['result']);
                                         }
                                     },
                                     error: function (response) {

@@ -201,15 +201,15 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-default" id="clpsDatiAxaMain">
+                <div class="panel panel-default" id="clpsDatiRCAMain">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <label><input type="checkbox" id=chkDatiAxa name=chkDatiAxa></label>&nbsp;&nbsp;&nbsp;2. Polizza AXA
+                            <label><input type="checkbox" id=chkDatiRCA name=chkDatiRCA></label>&nbsp;&nbsp;&nbsp;2. Polizza RCA
                         </h4>
                     </div>
-                    <div id="clpsDatiAxa" class="panel-collapse collapse">
+                    <div id="clpsDatiRCA" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <form class="form-horizontal" method="post" name="frmAxa" id="frmAxa">
+                            <form class="form-horizontal" method="post" name="frmRCA" id="frmRCA">
                                 <div class="form-group">
                                     <div class="cell">
                                         <label class="control-label col-sm-2" for="provincia">Provincia *</label>
@@ -335,7 +335,7 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                                 <div class="form-group">
                                     <div class="cell">
                                         <div class="col-sm-6">
-                                            <button style="width: 100%" id="btnMostraDettaglio" data-toggle="modal" data-target="#dettaglioAxa"
+                                            <button style="width: 100%" id="btnMostraDettaglio" data-toggle="modal" data-target="#dettaglioRCA"
                                                     type="button" class="btn btn-primary can-be-enabled">Mostra dettaglio calcoli</button>
                                         </div>
                                     </div>
@@ -372,9 +372,9 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                                 </div>
                                 <div class="form-group">
                                     <div class="cell">
-                                        <label class="control-label col-sm-8" for="totaleaxa">Totale AXA</label>
+                                        <label class="control-label col-sm-8" for="totalerca">Totale RCA</label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control full-width" id="totaleaxa" name="totaleaxa" disabled/>
+                                            <input type="text" class="form-control full-width" id="totalerca" name="totalerca" disabled/>
                                         </div>
                                     </div>
                                 </div>
@@ -628,15 +628,15 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                     <i class="glyphicon glyphicon-floppy-save"></i>&nbsp;Salva
                 </button>
             </div>
-            <div class="modal fade" id="dettaglioAxa" tabindex="-1" role="dialog" aria-labelledby="dettaglioAxa"
+            <div class="modal fade" id="dettaglioRCA" tabindex="-1" role="dialog" aria-labelledby="dettaglioRCA"
                  aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="dettaglioAxaLabel">Dettaglio AXA</h4>
+                            <h4 class="modal-title" id="dettaglioRCALabel">Dettaglio RCA</h4>
                         </div>
-                        <div id="dettaglioAxaBody" class="modal-body">
+                        <div id="dettaglioRCABody" class="modal-body">
                             <!-- here it comes the detail body-->
                         </div>
                         <div class="modal-footer">
@@ -760,8 +760,8 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                 }
             });
 
-            // Validazione form AXA
-            $('#frmAxa').validate({
+            // Validazione form RCA
+            $('#frmRCA').validate({
                 rules: {
                     provincia: {
                         required: true
@@ -972,12 +972,12 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
             // Gestione accordion
             //*************************************************************
 
-            $("#chkDatiAxa").on('change',function(){
-                if(!$("#chkDatiAxa").prop('checked')) {
-                    $("#clpsDatiAxa").collapse('hide');
+            $("#chkDatiRCA").on('change',function(){
+                if(!$("#chkDatiRCA").prop('checked')) {
+                    $("#clpsDatiRCA").collapse('hide');
 
                 } else {
-                    $("#clpsDatiAxa").collapse('show');
+                    $("#clpsDatiRCA").collapse('show');
                 }
             });
 
@@ -1056,25 +1056,25 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
             $('#professione').on('change', function () {
                 cliente.idprofessione = $(this).find(':selected').prop('id');
                 cliente.professione = $(this).find(':selected').prop('text');
-                ControllaFormAxa(); //Controllo se la form AXA è completa per calcolarne il totale
+                ControllaFormRCA(); //Controllo se la form RCA è completa per calcolarne il totale
             });
 
             //Cambio giorno di nascita
             $("#giorno").on("change", function () {
                 cliente.etaintestatario = calcolaEta();
-                ControllaFormAxa(); //Controllo se la form AXA è completa per calcolarne il totale
+                ControllaFormRCA(); //Controllo se la form RCA è completa per calcolarne il totale
             });
 
             //Cambio mese di nascita
             $("#mese").on("change", function () {
                 cliente.etaintestatario = calcolaEta();
-                ControllaFormAxa(); //Controllo se la form AXA è completa per calcolarne il totale
+                ControllaFormRCA(); //Controllo se la form RCA è completa per calcolarne il totale
             });
 
             //Cambio anno di nascita
             $("#anno").on("change", function () {
                 cliente.etaintestatario = calcolaEta();
-                ControllaFormAxa(); //Controllo se la form AXA è completa per calcolarne il totale
+                ControllaFormRCA(); //Controllo se la form RCA è completa per calcolarne il totale
             });
 
             // Calcola l'età corrente di un soggetto in base alla sua data di nascita
@@ -1109,32 +1109,32 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
 
 
             //*************************************************************
-            // Gestione form AXA
+            // Gestione form RCA
             //*************************************************************
 
             // Creo un JSON per contenere tutti i dati da passare alla funzione salva. La variabile viene anche inizializzata
-            var axa = {};
+            var rca = {};
 
             // Imposto i valori fissi
-            axa.idmassimale = 1;
-            $("#massimale").val(axa.idmassimale);
-            axa.blackbox = true;
-            axa.polinfcond = true;
-            $("#blackbox").prop('checked',axa.blackbox);
-            $("#polinfcond").prop('checked',axa.polinfcond);
+            rca.idmassimale = 1;
+            $("#massimale").val(rca.idmassimale);
+            rca.blackbox = true;
+            rca.polinfcond = true;
+            $("#blackbox").prop('checked',rca.blackbox);
+            $("#polinfcond").prop('checked',rca.polinfcond);
             // Faccio un clone dell'elenco dei comuni e delle classi di potenza. Quando vengono filtrati serve conservare l'elenco originale
             var comuni = $("#comune > option").clone();
             var classipotenza = $("#classepotenza > option").clone();
 
             // Se il valore della provincia cambia devo filtrare opportunamente i suoi comuni
             $('#provincia').on('change', function () {
-                axa.provincia = $(this).find(':selected').prop('id');
+                rca.provincia = $(this).find(':selected').prop('id');
 
                 var html = "";
 
                 // Rigenero l'elenco dei comuni in base alla provincia scelta
                 comuni.each(function() {
-                    if ($(this).attr('provincia') == axa.provincia) {
+                    if ($(this).attr('provincia') == rca.provincia) {
                         html = html + '<option id="' + $(this).attr('id') + '" value="' + $(this).val() + '">' + $(this).text() + '</option>';
                     }
                 });
@@ -1147,7 +1147,7 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
 
             // Se il valore del comune cambia aggiorno il JSON
             $('#comune').on('change', function () {
-                axa.idcomune = $(this).val();
+                rca.idcomune = $(this).val();
             });
 
             // Simulo un evento change sulle province
@@ -1156,7 +1156,7 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
 
             // Se il tipo alimentazione cambia devo filtrare opportunamente le classi potenza
             $('#tipoalimentazione').on('change', function () {
-                axa.tipoalimentazione = $(this).find(':selected').prop('id');
+                rca.tipoalimentazione = $(this).find(':selected').prop('id');
                 FiltraClassePotenza(); // La classe potenza va filtrata in base al tipo alimentazione e alla cilindrata
             });
 
@@ -1166,7 +1166,7 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                 var cilindrata = $(this).find(':selected').prop('id');
 
                 // se il valore di cilindrata è > 24 lo fisso a 24 perché tutti gli altri valori vengono accomunati
-                axa.idcilindrata = (eval(cilindrata) > 24 ? 24 : eval(cilindrata));
+                rca.idcilindrata = (eval(cilindrata) > 24 ? 24 : eval(cilindrata));
 
                 FiltraClassePotenza(); // La classe potenza va filtrata in base al tipo alimentazione e alla cilindrata
             });
@@ -1177,8 +1177,8 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
 
                 // Rigenero l'elenco delle classi potenza in base al tipo di alimentazione
                 classipotenza.each(function() {
-                    //if ($(this).attr('idtipoalimentazione') == axa.tipoalimentazione) {
-                    if ($(this).attr('idtipoalimentazione') == axa.tipoalimentazione && $(this).attr('idcilindrata') == axa.idcilindrata) {
+                    //if ($(this).attr('idtipoalimentazione') == rca.tipoalimentazione) {
+                    if ($(this).attr('idtipoalimentazione') == rca.tipoalimentazione && $(this).attr('idcilindrata') == rca.idcilindrata) {
                         html = html + '<option id="' + $(this).attr('id') + '" value="' + $(this).val() + '">' + $(this).text() + '</option>';
                     }
                 });
@@ -1191,7 +1191,7 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
 
             // Se il valore della classe potenza cambia aggiorno il JSON
             $('#classepotenza').on('change', function () {
-                axa.idclassepotenza = $(this).val();
+                rca.idclassepotenza = $(this).val();
             });
 
             // Simulo un evento change sul tipo alimentazione
@@ -1206,12 +1206,12 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
             function LeggiValorePremioBase() {
                 var deferred = $.Deferred();
 
-                axa.ajax_function = "LeggiValorePremioBase";
+                rca.ajax_function = "LeggiValorePremioBase";
                 $.ajax({
                     url: "ajax_responder.php",
                     dataType: "json",
                     type: "post",
-                    data: axa,
+                    data: rca,
                     cache: false,
                     success: function (response) {
                         var result = response['result']['valorepremiobase'];
@@ -1229,17 +1229,17 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                 return deferred.promise();
             }
 
-            // Legge i valori dei parametri per il calcolo del totale AXA
+            // Legge i valori dei parametri per il calcolo del totale RCA
             function LeggiValoriParametri() {
                 var deferred = $.Deferred();
                 v = {};
-                axa.ajax_function = "LeggiValoriParametri";
+                rca.ajax_function = "LeggiValoriParametri";
 
                 $.ajax({
                     url: "ajax_responder.php",
                     dataType: "json",
                     type: "post",
-                    data: axa,
+                    data: rca,
                     cache: false,
                     success: function (response) {
                         var result = response['result'];
@@ -1263,44 +1263,47 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
             // Esegue il calcolo di tutte le somme parziali per calcolo del premio finale
             // Se il valore finale NON è un valore numerico viene mostrata la scritta "DATI MANCANTI"
             function CalcolaSommeParziali() {
-                axa.S01 = axa.valorepremiobase * (100 + axa.valoriparametri.massimale) / 100;
-                axa.S02 = axa.S01 * (100 + axa.valoriparametri.etaintestatario) / 100;
-                axa.S03 = axa.S02 * (100 + axa.valoriparametri.professione) / 100;
-                axa.S04 = axa.S03 * (100 + axa.valoriparametri.marcaveicolo) / 100;
-                axa.S05 = axa.S04 * (100 + axa.valoriparametri.tipoveicolo) / 100;
-                axa.S06 = axa.S05 * (100 + axa.valoriparametri.gruppoetaveicolo) / 100;
-                axa.S07 = axa.S06 * (100 + axa.valoriparametri.numsinistridenunciati) / 100;
-                axa.S08 = axa.S07 * (100 + axa.valoriparametri.numannisenzasinistri) / 100;
+                rca.S01 = rca.valorepremiobase * (100 + rca.valoriparametri.massimale) / 100;
+                rca.S02 = rca.S01 * (100 + rca.valoriparametri.etaintestatario) / 100;
+                rca.S03 = rca.S02 * (100 + rca.valoriparametri.professione) / 100;
+                rca.S04 = rca.S03 * (100 + rca.valoriparametri.marcaveicolo) / 100;
+                rca.S05 = rca.S04 * (100 + rca.valoriparametri.tipoveicolo) / 100;
+                rca.S06 = rca.S05 * (100 + rca.valoriparametri.gruppoetaveicolo) / 100;
+                rca.S07 = rca.S06 * (100 + rca.valoriparametri.numsinistridenunciati) / 100;
+                rca.S08 = rca.S07 * (100 + rca.valoriparametri.numannisenzasinistri) / 100;
 
-                axa.S09 = axa.S08 * (100 + ((axa.blackbox) ? axa.valoriparametri.blackbox : 0)) / 100;
-                axa.S10 = axa.S09 * (100 + ((axa.guidaesperta) ? axa.valoriparametri.guidaesperta : 0)) / 100;
+                rca.S09 = rca.S08 * (100 + ((rca.blackbox) ? rca.valoriparametri.blackbox : 0)) / 100;
+                rca.S10 = rca.S09 * (100 + ((rca.guidaesperta) ? rca.valoriparametri.guidaesperta : 0)) / 100;
+                console.log(rca.S10);
+                rca.S11 = rca.S10 * (100 + rca.valoriparametri.scontoconvenzione) / 100;
+                console.log(rca.S11);
 
-                axa.S11 = RoundTo2Decs(axa.S10 + ((axa.polinfcond) ? axa.valoriparametri.polinfcond : 0));
+                rca.S18 = RoundTo2Decs(rca.S11 + ((rca.polinfcond) ? rca.valoriparametri.polinfcond : 0));
 
-                axa.ssn = axa.S11 * axa.valoriparametri.ssn / 100;
-                axa.imposte = axa.S11 * axa.valoriparametri.imposte / 100;
+                rca.ssn = rca.S18 * rca.valoriparametri.ssn / 100;
+                rca.imposte = rca.S18 * rca.valoriparametri.imposte / 100;
 
-                axa.totaleimposte = RoundTo2Decs(axa.ssn + axa.imposte);
+                rca.totaleimposte = RoundTo2Decs(rca.ssn + rca.imposte);
 
-                axa.S12 = axa.S11 + axa.totaleimposte;
+                rca.S19 = rca.S18 + rca.totaleimposte + rca.valoriparametri.ard;
 
-                axa.commissioniagenzia = RoundTo2Decs(axa.S12 * axa.valoriparametri.commissioniagenzia / 100);
-                axa.S13 = axa.S12 + axa.commissioniagenzia;
-
-                if (axa.S13) {
-                    axa.totaleaxa = RoundTo2Decs(axa.S13);
-                    $("#totalepremioanteimposte").val(axa.S11);
-                    $("#totaleimposte").val(axa.totaleimposte);
-                    $("#totalepremio").val(axa.S12);
-                    $("#commissioniagenzia").val(axa.commissioniagenzia);
-                    $("#totaleaxa").val(axa.totaleaxa);
+                rca.commissioniagenzia = RoundTo2Decs(rca.S19 * rca.valoriparametri.commissioniagenzia / 100);
+                rca.S20 = rca.S19 + rca.commissioniagenzia;
+                console.log(rca);
+                if (rca.S20) {
+                    rca.totalerca = RoundTo2Decs(rca.S20);
+                    $("#totalepremioanteimposte").val(rca.S18);
+                    $("#totaleimposte").val(rca.totaleimposte);
+                    $("#totalepremio").val(rca.S19);
+                    $("#commissioniagenzia").val(rca.commissioniagenzia);
+                    $("#totalerca").val(rca.totalerca);
                 } else {
-                    axa.totaleaxa = 0;
+                    rca.totalerca = 0;
                     $("#totalepremioanteimposte").val(0);
                     $("#totaleimposte").val(0);
                     $("#totalepremio").val(0);
                     $("#commissioniagenzia").val(0);
-                    $("#totaleaxa").val("DATI PRESENTI SOLO PER PROV. CE!");
+                    $("#totalerca").val("DATI PRESENTI SOLO PER PROV. CE!");
                 }
             }
 
@@ -1323,150 +1326,163 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
 
                     '<div class="form-group">' +
                     '<div class="cell"><label class="control-label col-sm-9">Premio base di rif. (Zona ' + zona +
-                    '; Cilindrata ' + cilindrata + '; Alim. ' + tipoalimentazione + '; CU ' + axa.classemerito + ')</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">€ ' + axa.valorepremiobase + '</label></div>' +
+                    '; Cilindrata ' + cilindrata + '; Alim. ' + tipoalimentazione + '; CU ' + rca.classemerito + ')</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">€ ' + rca.valorepremiobase + '</label></div>' +
                     '</div>' +
 
                     '<div class="form-group">' +
                     '<div class="cell"><label class="control-label col-sm-3">Massimale ' + massimale + '</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">' + axa.valoriparametri.massimale + '%</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">= ' + axa.valorepremiobase + ' x ' + (100 + axa.valoriparametri.massimale)/100 + '</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(axa.S01) + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">' + rca.valoriparametri.massimale + '%</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">= ' + rca.valorepremiobase + ' x ' + (100 + rca.valoriparametri.massimale)/100 + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(rca.S01) + '</label></div>' +
                     '</div>' +
 
                     '<div class="form-group">' +
                     '<div class="cell"><label class="control-label col-sm-3">Età intestatario ' + cliente.etaintestatario + ' anni </label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">' + axa.valoriparametri.etaintestatario + '%</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(axa.S01) + ' x ' + (100 + axa.valoriparametri.etaintestatario)/100 + '</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(axa.S02) + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">' + rca.valoriparametri.etaintestatario + '%</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(rca.S01) + ' x ' + (100 + rca.valoriparametri.etaintestatario)/100 + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(rca.S02) + '</label></div>' +
                     '</div>' +
 
                     '<div class="form-group">' +
                     '<div class="cell"><label class="control-label col-sm-3">Professione: ' + cliente.professione + ' </label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">' + axa.valoriparametri.professione + '%</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(axa.S02) + ' x ' + (100 + axa.valoriparametri.professione)/100 + '</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(axa.S03) + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">' + rca.valoriparametri.professione + '%</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(rca.S02) + ' x ' + (100 + rca.valoriparametri.professione)/100 + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(rca.S03) + '</label></div>' +
                     '</div>' +
 
                     '<div class="form-group">' +
                     '<div class="cell"><label class="control-label col-sm-3">Marca veicolo: ' + marcaveicolo + ' </label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">' + axa.valoriparametri.marcaveicolo + '%</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(axa.S03) + ' x ' + (100 + axa.valoriparametri.marcaveicolo)/100 + '</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(axa.S04) + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">' + rca.valoriparametri.marcaveicolo + '%</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(rca.S03) + ' x ' + (100 + rca.valoriparametri.marcaveicolo)/100 + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(rca.S04) + '</label></div>' +
                     '</div>' +
 
                     '<div class="form-group">' +
                     '<div class="cell"><label class="control-label col-sm-3">Tipo veicolo: ' + tipoveicolo + ' </label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">' + axa.valoriparametri.tipoveicolo + '%</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(axa.S04) + ' x ' + (100 + axa.valoriparametri.tipoveicolo)/100 + '</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(axa.S05) + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">' + rca.valoriparametri.tipoveicolo + '%</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(rca.S04) + ' x ' + (100 + rca.valoriparametri.tipoveicolo)/100 + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(rca.S05) + '</label></div>' +
                     '</div>' +
 
                     '<div class="form-group">' +
                     '<div class="cell"><label class="control-label col-sm-3">Età veicolo: ' + gruppoetaveicolo + ' </label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">' + axa.valoriparametri.gruppoetaveicolo + '%</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(axa.S05) + ' x ' + (100 + axa.valoriparametri.gruppoetaveicolo)/100 + '</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(axa.S06) + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">' + rca.valoriparametri.gruppoetaveicolo + '%</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(rca.S05) + ' x ' + (100 + rca.valoriparametri.gruppoetaveicolo)/100 + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(rca.S06) + '</label></div>' +
                     '</div>' +
 
                     '<div class="form-group">' +
                     '<div class="cell"><label class="control-label col-sm-3">Sinistri ultimi 2 anni: ' + numsinistridenunciati + ' </label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">' + axa.valoriparametri.numsinistridenunciati + '%</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(axa.S06) + ' x ' + (100 + axa.valoriparametri.numsinistridenunciati)/100 + '</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(axa.S07) + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">' + rca.valoriparametri.numsinistridenunciati + '%</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(rca.S06) + ' x ' + (100 + rca.valoriparametri.numsinistridenunciati)/100 + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(rca.S07) + '</label></div>' +
                     '</div>' +
 
                     '<div class="form-group">' +
                     '<div class="cell"><label class="control-label col-sm-3">Anni senza sinistri: ' + numannisenzasinistri + ' </label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">' + axa.valoriparametri.numannisenzasinistri + '%</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(axa.S07) + ' x ' + (100 + axa.valoriparametri.numannisenzasinistri)/100 + '</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(axa.S08) + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">' + rca.valoriparametri.numannisenzasinistri + '%</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(rca.S07) + ' x ' + (100 + rca.valoriparametri.numannisenzasinistri)/100 + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(rca.S08) + '</label></div>' +
                     '</div>' +
 
                     '<div class="form-group">' +
                     '<div class="cell"><label class="control-label col-sm-3">Black box: Sì </label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">' + axa.valoriparametri.blackbox + '%</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(axa.S08) + ' x ' + (100 + axa.valoriparametri.blackbox)/100 + '</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(axa.S09) + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">' + rca.valoriparametri.blackbox + '%</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(rca.S08) + ' x ' + (100 + rca.valoriparametri.blackbox)/100 + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(rca.S09) + '</label></div>' +
                     '</div>' +
 
                     '<div class="form-group">' +
                     '<div class="cell"><label class="control-label col-sm-3">Guida esperta: Sì </label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">' + axa.valoriparametri.guidaesperta + '%</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(axa.S09) + ' x ' + (100 + axa.valoriparametri.guidaesperta)/100 + '</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(axa.S10) + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">' + rca.valoriparametri.guidaesperta + '%</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(rca.S09) + ' x ' + (100 + rca.valoriparametri.guidaesperta)/100 + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(rca.S10) + '</label></div>' +
                     '</div>' +
 
                     '<div class="form-group">' +
-                    '<div class="cell"><label class="control-label col-sm-3">Polizza inf. cond.: Sì </label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">' + axa.valoriparametri.polinfcond + '%</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">= ' + axa.valoriparametri.polinfcond + '</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(axa.S11) + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">Totale imponibile (con convenzione) </label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">' + rca.valoriparametri.scontoconvenzione + '%</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(rca.S10) + ' x ' + (100 + rca.valoriparametri.scontoconvenzione)/100 + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(rca.S11) + '</label></div>' +
                     '</div>' +
 
                     '<div class="form-group">' +
                     '<div class="cell"><label class="control-label col-sm-9 right">Premio imponibile (P.I.) </label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(axa.S11) + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(rca.S11) + '</label></div>' +
                     '</div>' +
 
                     '<div class="form-group">' +
-                    '<div class="cell"><label class="control-label col-sm-3"> + S.S.N (' + axa.valoriparametri.ssn + '% del P.I.) </label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(axa.S11) + ' x ' + (100 + axa.valoriparametri.ssn)/100 + '</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-6">€ ' + Math.round(axa.ssn) + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">Polizza inf. cond.: Sì </label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">' + rca.valoriparametri.polinfcond + '€</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">= ' + rca.valoriparametri.polinfcond + '€</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(rca.S18) + '</label></div>' +
                     '</div>' +
 
                     '<div class="form-group">' +
-                    '<div class="cell"><label class="control-label col-sm-3"> + Imposte (' + axa.valoriparametri.imposte + '% del P.I.) </label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(axa.S11) + ' x ' + (100 + axa.valoriparametri.imposte)/100 + '</label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-6">€ ' + Math.round(axa.imposte) + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3"> + S.S.N (' + rca.valoriparametri.ssn + '% del P.I.) </label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(rca.S18) + ' x ' + (100 + rca.valoriparametri.ssn)/100 + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-6">€ ' + Math.round(rca.ssn) + '</label></div>' +
+                    '</div>' +
+
+                    '<div class="form-group">' +
+                    '<div class="cell"><label class="control-label col-sm-3"> + Imposte (' + rca.valoriparametri.imposte + '% del P.I.) </label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">= ' + Math.round(rca.S18) + ' x ' + (100 + rca.valoriparametri.imposte)/100 + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-6">€ ' + Math.round(rca.imposte) + '</label></div>' +
+                    '</div>' +
+
+                    '<div class="form-group">' +
+                    '<div class="cell"><label class="control-label col-sm-3"> + Assistenza stradale: Sì </label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">' + rca.valoriparametri.ard + '€</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">= ' + rca.valoriparametri.ard + '€</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(rca.S19) + '</label></div>' +
                     '</div>' +
 
                     '<div class="form-group">' +
                     '<div class="cell"><label class="control-label col-sm-9 right">PREMIO TOTALE </label></div>' +
-                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(axa.S12) + '</label></div>' +
+                    '<div class="cell"><label class="control-label col-sm-3">€ ' + Math.round(rca.S20) + '</label></div>' +
                     '</div>' +
 
                     '</form>';
                 return html;
             }
 
-            // Mostra dettaglio Axa
-            $('#dettaglioAxa').on('shown.bs.modal', function() {
-                $("#dettaglioAxaBody").html(GeneraDettaglio());
+            // Mostra dettaglio RCA
+            $('#dettaglioRCA').on('shown.bs.modal', function() {
+                $("#dettaglioRCABody").html(GeneraDettaglio());
             })
 
             // Se qualcosa è stato modificato nella form, al posto del totale viene mostrata la scritta "RICALCOLA!"
-            $("#frmAxa").on('change',function (e) {
-                ControllaFormAxa();
+            $("#frmRCA").on('change',function (e) {
+                ControllaFormRCA();
             });
 
-            // Controlla se la form AXA ha tutti i valori a posto. In tal caso va a fare il calcolo del totale previa
+            // Controlla se la form RCA ha tutti i valori a posto. In tal caso va a fare il calcolo del totale previa
             // lettura della base imponibile e dei parametri di calcolo
-            function ControllaFormAxa() {
-                axa.idcliente = cliente.idcliente;
-                axa.idprofessione = cliente.idprofessione;
-                axa.idetaintestatario = cliente.etaintestatario;
-                axa.idmarcaveicolo = $("#marcaveicolo").val();
-                axa.idtipoveicolo = $("#tipoveicolo").val();
-                axa.idgruppoetaveicolo = $("#gruppoetaveicolo").val();
-                axa.idclassepotenza = $("#classepotenza").val();
-                axa.idtipoalimentazione = $("#tipoalimentazione").val();
-                axa.classemerito = $("#classemerito").val();
-                axa.idnumannisenzasinistri = $("#numannisenzasinistri").val();
-                axa.idnumsinistridenunciati = $("#numsinistridenunciati").val();
-                axa.idtipofrazionamento = $("#tipofrazionamento").val();
-                axa.guidaesperta = $("#guidaesperta").prop('checked');
-                if(axa.idprofessione && axa.idetaintestatario && axa.provincia && axa.idcomune && axa.idclassepotenza &&
-                    axa.classemerito && axa.idcilindrata && axa.idmarcaveicolo && axa.idtipoveicolo &&
-                    axa.idgruppoetaveicolo && axa.idtipoalimentazione && axa.idnumannisenzasinistri && axa.idnumsinistridenunciati &&
-                    axa.idmassimale && axa.idtipofrazionamento ) {
+            function ControllaFormRCA() {
+                rca.idcliente = cliente.idcliente;
+                rca.idprofessione = cliente.idprofessione;
+                rca.idetaintestatario = cliente.etaintestatario;
+                rca.idmarcaveicolo = $("#marcaveicolo").val();
+                rca.idtipoveicolo = $("#tipoveicolo").val();
+                rca.idgruppoetaveicolo = $("#gruppoetaveicolo").val();
+                rca.idclassepotenza = $("#classepotenza").val();
+                rca.idtipoalimentazione = $("#tipoalimentazione").val();
+                rca.classemerito = $("#classemerito").val();
+                rca.idnumannisenzasinistri = $("#numannisenzasinistri").val();
+                rca.idnumsinistridenunciati = $("#numsinistridenunciati").val();
+                rca.idtipofrazionamento = $("#tipofrazionamento").val();
+                rca.guidaesperta = $("#guidaesperta").prop('checked');
+                if(rca.idprofessione && rca.idetaintestatario && rca.provincia && rca.idcomune && rca.idclassepotenza &&
+                    rca.classemerito && rca.idcilindrata && rca.idmarcaveicolo && rca.idtipoveicolo &&
+                    rca.idgruppoetaveicolo && rca.idtipoalimentazione && rca.idnumannisenzasinistri && rca.idnumsinistridenunciati &&
+                    rca.idmassimale && rca.idtipofrazionamento ) {
                     $.when(LeggiValorePremioBase()).done(function(value) {
                         // Imposto il valore premio base
-                        axa.valorepremiobase = value;
+                        rca.valorepremiobase = value;
                         $.when(LeggiValoriParametri()).done(function(value) {
                             // Imposto il valore degli altri parametri
-                            axa.valoriparametri = value;
-
+                            rca.valoriparametri = value;
                             //Ricalcolo le somme parziali
                             CalcolaSommeParziali();
                         });
@@ -1842,7 +1858,7 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                 result.message = "OK";
                 var contaAccordion = 0;
 
-                if($("#chkDatiAxa").prop('checked')) {
+                if($("#chkDatiRCA").prop('checked')) {
                     contaAccordion +=1;
                 }
                 if($("#chkDatiAugusta").prop('checked')) {
@@ -1882,11 +1898,11 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                         s.push("Cliente");
                     }
 
-                    var frmAxa = $("#frmAxa");
-                    frmAxa.validate();
-                    var frmAxaValida = frmAxa.valid();
-                    if((!frmAxaValida) || (axa.totaleaxa == 0)) {
-                        s.push("AXA");
+                    var frmRCA = $("#frmRCA");
+                    frmRCA.validate();
+                    var frmRCAValida = frmRCA.valid();
+                    if((!frmRCAValida) || (rca.totalerca == 0)) {
+                        s.push("RCA");
                     }
 
                     var frmAugusta = $("#frmAugusta");
@@ -1910,7 +1926,7 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                     }
 
                     // questa variabile sarà 'true' se tutte le singole form sono valide
-                    var okSalva =  frmClienteValida & frmAxaValida & frmAugustaValida & frmAccessoriValida & frmCopertureAggiuntiveValida;
+                    var okSalva =  frmClienteValida & frmRCAValida & frmAugustaValida & frmAccessoriValida & frmCopertureAggiuntiveValida;
 
                     // se tutte le form sono valide
                     if(okSalva) {
@@ -1960,15 +1976,15 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                 return cliente;
             }
 
-            // PreparaPolizzaAxa
-            function PreparaPolizzaAxa(id_preventivo,id_cliente) {
-                axa.idpreventivo = id_preventivo;
-                axa.idcliente = id_cliente;
-                axa.blackbox = (axa.blackbox ? 1:0);
-                axa.guidaesperta = (axa.guidaesperta ? 1:0);
-                axa.polinfcond = (axa.polinfcond ? 1:0);
+            // PreparaPolizzaRCA
+            function PreparaPolizzaRCA(id_preventivo,id_cliente) {
+                rca.idpreventivo = id_preventivo;
+                rca.idcliente = id_cliente;
+                rca.blackbox = (rca.blackbox ? 1:0);
+                rca.guidaesperta = (rca.guidaesperta ? 1:0);
+                rca.polinfcond = (rca.polinfcond ? 1:0);
 
-                return axa;
+                return rca;
             }
 
             // PreparaPolizzaAugusta
@@ -2050,12 +2066,12 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                 //Il cliente viene salvato sempre
                 form_data.cliente = PreparaCliente(idcliente);
 
-                //Se AXA è selezionata viene salvata
-                if($("#chkDatiAxa").prop('checked')) {
-                    form_data.axa = PreparaPolizzaAxa(idpreventivo,idcliente);
+                //Se RCA è selezionata viene salvata
+                if($("#chkDatiRCA").prop('checked')) {
+                    form_data.rca = PreparaPolizzaRCA(idpreventivo,idcliente);
                 } else {
-                    axa.totaleaxa = 0;
-                    form_data.axa = {};
+                    rca.totalerca = 0;
+                    form_data.rca = {};
                 }
 
                 //Se Augusta è selezionata viene salvata
@@ -2086,7 +2102,7 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                 var preventivo = {};
                 preventivo.idpreventivo = idpreventivo;
                 preventivo.idcliente = idcliente;
-                preventivo.premiototale = axa.totaleaxa + augusta.totaleaugusta +
+                preventivo.premiototale = rca.totalerca + augusta.totaleaugusta +
                     accessori.totaleaccessori + copertureaggiuntive.totalecopertureaggiuntive;
                 preventivo.operazione = ($("#idpreventivo").val() != "" ? "M" : "I");
                 form_data.preventivo = preventivo;
@@ -2102,19 +2118,16 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                     success: function (response) {
                         localStorage.messagetype = "success";
                         localStorage.message = "Preventivo inserito correttamente!";
-                        console.log("success");
-                        console.log(response);
                     },
                     error: function (response) {
-                        localStorage.messagetype = "success";
+                        localStorage.messagetype = "error";
                         localStorage.message = response["result"];
-                        console.log(response);
                     }
                 });
             }
 
             // Imposta dei dati di test all'apertura della form di edit
-            function CancellaCampiAxa() {
+            function CancellaCampiRCA() {
 
                 // DATI POLIZZA
                 $("#provincia").val("");$("#provincia").trigger("change");
@@ -2189,36 +2202,36 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
             // Imposta dei dati di test per il cliente all'apertura della form di edit
             function ImpostaDatiTestCliente() {
                 //DATI CLIENTE
-                $("#codicefiscale").val("FRRSMC68L16F704U");
-                $("#cognome").val("Ferriero");
-                $("#nome").val("Simmaco");
-                $("#email").val("s.ferriero@alice.it");
+                $("#codicefiscale").val("LFFGPR71A01B963Y");
+                $("#cognome").val("Loffredo");
+                $("#nome").val("Giampiero");
+                $("#email").val("misterx@acme.com");
                 $("#telefono").val("72783888");
                 $("#cellulare").val("66378838");
-                $("#giorno").val("16");
-                $("#mese").val("07");
-                $("#anno").val("1968");$("#anno").trigger("change");
-                $("#professione").val("8");$("#professione").trigger("change");
+                $("#giorno").val("01");
+                $("#mese").val("01");
+                $("#anno").val("1971");$("#anno").trigger("change");
+                $("#professione").val("17");$("#professione").trigger("change");
             }
 
-            // Imposta dei dati di test per la polizza AXA all'apertura della form di edit
-            function ImpostaDatiTestAxa() {
-                // DATI AXA
-                $("#chkDatiAxa").prop('checked',true);$("#chkDatiAxa").trigger("change");
+            // Imposta dei dati di test per la polizza RCA all'apertura della form di edit
+            function ImpostaDatiTestRCA() {
+                // DATI RCA
+                $("#chkDatiRCA").prop('checked',true);$("#chkDatiRCA").trigger("change");
                 $("#provincia").val("CASERTA");$("#provincia").trigger("change");
-                $("#comune").val("160");$("#comune").trigger("change");
-                $("#tipoalimentazione").val("2");$("#tipoalimentazione").trigger("change");
-                $("#cilindrata").val("16");$("#cilindrata").trigger("change");
-                $("#classepotenza").val("56");$("#classepotenza").trigger("change");
-                $("#classemerito").val("03");$("#classemerito").trigger("change");
-                $("#marcaveicolo").val("5");$("#marcaveicolo").trigger("change");
-                $("#tipoveicolo").val("3");$("#tipoveicolo").trigger("change");
+                $("#comune").val("114");$("#comune").trigger("change");
+                $("#tipoalimentazione").val("1");$("#tipoalimentazione").trigger("change");
+                $("#cilindrata").val("14");$("#cilindrata").trigger("change");
+                $("#classepotenza").val("13");$("#classepotenza").trigger("change");
+                $("#classemerito").val("01");$("#classemerito").trigger("change");
+                $("#marcaveicolo").val("6");$("#marcaveicolo").trigger("change");
+                $("#tipoveicolo").val("1");$("#tipoveicolo").trigger("change");
                 $("#gruppoetaveicolo").val("1");$("#gruppoetaveicolo").trigger("change");
                 $("#numannisenzasinistri").val("1");$("#numannisenzasinistri").trigger("change");
                 $("#numsinistridenunciati").val("1");$("#numsinistridenunciati").trigger("change");
                 $("#tipofrazionamento").val("2");$("#tipofrazionamento").trigger("change");
                 $("#guidaesperta").attr("checked",true);
-                ControllaFormAxa();
+                ControllaFormRCA();
             }
 
             // Imposta dei dati di test per Augusta all'apertura della form di edit
@@ -2307,10 +2320,10 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
             // Imposta i dati di test per l'intero modulo
             function ImpostaDatiTest() {
                 ImpostaDatiTestCliente();
-                ImpostaDatiTestAxa();
-                ImpostaDatiTestAugusta();
-                ImpostaDatiTestAccessori();
-                ImpostaDatiTestCopertureAggiuntive();
+                ImpostaDatiTestRCA();
+                //ImpostaDatiTestAugusta();
+                //ImpostaDatiTestAccessori();
+                //ImpostaDatiTestCopertureAggiuntive();
             }
 
             $(window).load(function(){
@@ -2325,7 +2338,7 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
 
                         var xpreventivo = result["preventivo"];
                         var xcliente = result["cliente"];
-                        var xaxa = result["axa"];
+                        var xrca = result["rca"];
                         var xaugusta = result["augusta"];
                         var xaccessori = result["accessori"];
                         var xcopertureaggiuntive = result["copertureaggiuntive"];
@@ -2361,47 +2374,47 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
                         $("#professione").val(cliente.idprofessione);$("#professione").trigger("change");
 
 
-                        //IMPOSTA AXA
-                        if (xaxa) {
-                            //console.log(xaxa);
-                            $("#chkDatiAxa").prop('checked',true).trigger("change");
-                            axa.idpreventivo = xaxa.idpreventivo;
-                            axa.idcliente = xaxa.idcliente;
-                            axa.idcomune = xaxa.idcomune;
-                            axa.provincia = xaxa.provincia;
-                            axa.comune = xaxa.comune;
-                            axa.idprofessione = xaxa.idprofessione;
-                            axa.idetaintestatario = xaxa.idetaintestatario;
-                            axa.idmarcaveicolo = xaxa.idmarcaveicolo;
-                            axa.idtipoveicolo = xaxa.idtipoveicolo;
-                            axa.idgruppoetaveicolo = xaxa.idgruppoetaveicolo;
-                            axa.idclassepotenza = xaxa.idclassepotenza;
-                            axa.idtipoalimentazione = xaxa.idtipoalimentazione;
-                            axa.idcilindrata = xaxa.idcilindrata;
-                            axa.classemerito = pad(xaxa.classemerito,2);
-                            axa.idnumannisenzasinistri = xaxa.idnumannisenzasinistri;
-                            axa.idnumsinistridenunciati = xaxa.idnumsinistridenunciati;
-                            axa.idtipofrazionamento = xaxa.idtipofrazionamento;
-                            axa.idmassimale = xaxa.idmassimale;
-                            axa.blackbox = 1;
-                            axa.guidaesperta = xaxa.guidaesperta;
-                            axa.polinfcond = 1;
+                        //IMPOSTA RCA
+                        if (xrca) {
+                            //console.log(xrca);
+                            $("#chkDatiRCA").prop('checked',true).trigger("change");
+                            rca.idpreventivo = xrca.idpreventivo;
+                            rca.idcliente = xrca.idcliente;
+                            rca.idcomune = xrca.idcomune;
+                            rca.provincia = xrca.provincia;
+                            rca.comune = xrca.comune;
+                            rca.idprofessione = xrca.idprofessione;
+                            rca.idetaintestatario = xrca.idetaintestatario;
+                            rca.idmarcaveicolo = xrca.idmarcaveicolo;
+                            rca.idtipoveicolo = xrca.idtipoveicolo;
+                            rca.idgruppoetaveicolo = xrca.idgruppoetaveicolo;
+                            rca.idclassepotenza = xrca.idclassepotenza;
+                            rca.idtipoalimentazione = xrca.idtipoalimentazione;
+                            rca.idcilindrata = xrca.idcilindrata;
+                            rca.classemerito = pad(xrca.classemerito,2);
+                            rca.idnumannisenzasinistri = xrca.idnumannisenzasinistri;
+                            rca.idnumsinistridenunciati = xrca.idnumsinistridenunciati;
+                            rca.idtipofrazionamento = xrca.idtipofrazionamento;
+                            rca.idmassimale = xrca.idmassimale;
+                            rca.blackbox = 1;
+                            rca.guidaesperta = xrca.guidaesperta;
+                            rca.polinfcond = 1;
 
-                            $("#provincia").val(xaxa.provincia).trigger("change");
-                            $("#comune").val(xaxa.idcomune).trigger("change");
-                            $("#classemerito").val(pad(xaxa.classemerito,2));
-                            $("#tipoalimentazione").val(xaxa.idtipoalimentazione).trigger("change");
-                            $("#cilindrata").val(xaxa.idcilindrata).trigger("change");
-                            $("#classepotenza").val(xaxa.idclassepotenza);
-                            $("#marcaveicolo").val(xaxa.idmarcaveicolo);
-                            $("#tipoveicolo").val(xaxa.idtipoveicolo);
-                            $("#gruppoetaveicolo").val(xaxa.idgruppoetaveicolo);
-                            $("#numannisenzasinistri").val(xaxa.idnumannisenzasinistri);
-                            $("#numsinistridenunciati").val(xaxa.idnumsinistridenunciati);
-                            $("#tipofrazionamento").val(xaxa.idtipofrazionamento);
-                            $("#massimale").val(xaxa.idmassimale);
-                            $("#guidaesperta").attr("checked",(xaxa.guidaesperta==1?true:false));
-                            ControllaFormAxa();
+                            $("#provincia").val(xrca.provincia).trigger("change");
+                            $("#comune").val(xrca.idcomune).trigger("change");
+                            $("#classemerito").val(pad(xrca.classemerito,2));
+                            $("#tipoalimentazione").val(xrca.idtipoalimentazione).trigger("change");
+                            $("#cilindrata").val(xrca.idcilindrata).trigger("change");
+                            $("#classepotenza").val(xrca.idclassepotenza);
+                            $("#marcaveicolo").val(xrca.idmarcaveicolo);
+                            $("#tipoveicolo").val(xrca.idtipoveicolo);
+                            $("#gruppoetaveicolo").val(xrca.idgruppoetaveicolo);
+                            $("#numannisenzasinistri").val(xrca.idnumannisenzasinistri);
+                            $("#numsinistridenunciati").val(xrca.idnumsinistridenunciati);
+                            $("#tipofrazionamento").val(xrca.idtipofrazionamento);
+                            $("#massimale").val(xrca.idmassimale);
+                            $("#guidaesperta").attr("checked",(xrca.guidaesperta==1?true:false));
+                            ControllaFormRCA();
                         }
 
                         //IMPOSTA AUGUSTA

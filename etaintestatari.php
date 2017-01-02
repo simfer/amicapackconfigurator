@@ -6,7 +6,7 @@ include_once "daelib.php";
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Età intestatari</h1>
+            <h1 class="page-header">Età Intestatari</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -14,9 +14,6 @@ include_once "daelib.php";
     <div class="row">
         <div class="col-lg-12 col-md-12">
             <div id="toolbar">
-                <button id="btnNew" type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal"><i
-                        class="glyphicon glyphicon-plus"></i>&nbsp;Aggiungi
-                </button>
                 <button id="btnPrint" type="button" class="btn btn-success"><i class="glyphicon glyphicon-print"></i>&nbsp;Stampa
                 </button>
             </div>
@@ -85,7 +82,7 @@ include_once "daelib.php";
                 <thead>
                 <tr>
                     <th data-field="state" data-radio="true"></th>
-                    <th data-field="idetaintestatario" data-align="center" data-sortable="true">ID Param.</th>
+                    <th data-field="idetaintestatario" data-align="center" data-sortable="true">Età intestatario</th>
                     <th data-field="valore" data-align="left" data-sortable="true">Valore</th>
                     <th data-field="attivo" data-align="center" data-visible="false" data-sortable="false">Attivo</th>
                     <th data-field="operate"
@@ -104,27 +101,34 @@ include_once "daelib.php";
     include_once "footer.php";
     ?>
     <script type="text/javascript">
-        var oFields = {
-            "thetable":"etaintestatari",
-            "thekeyfield":"idetaintestatario",
-            "therules": {
-                "valore": {required: true}
-            },
-            "themessages": {
-                "valore": {required: "Campo obbligatorio!"}
-            },
-            "fields": [
+        var oForm = {
+            "table":"etaintestatari",
+            "labelForNew":"Nuova età intestatario",
+            "labelForEdit":"Modifica età intestatario",
+            "keyfield":"idetaintestatario",
+            "autoincrement":"true",
+            "buttons": [
+                {"name": "btnChiudi","caption":"Chiudi","class":"btn btn-default","dismiss":"true"},
+                {"name": "btnSalva","caption":"Salva","class":"btn btn-primary","dismiss":"true"}],
+            "panels":[
                 {
-                    "name": "idetaintestatario",
-                    "label": "ID",
-                    "type": "hidden",
-                    "visible": "true",
-                    "disabled": "false",
-                    "autoincrement": "true"
-                },
-                {"name": "valore", "label": "Valore", "type": "text", "visible": "true", "disabled": "false", "editable": "true"}
+                    "name": "etaintestatario", "description":"Età Intestatario", "collapsable":"false","collapsed":"false",
+                    "rules": {
+                        "valore": {required: true}
+                    },
+                    "messages": {
+                        "valore": {required: "Campo obbligatorio!"}
+                    },
+                    "rows": [
+                        {"cells":[
+                            {"name": "valore", "label": "Valore", "labelsize":"2","fieldsize":"4", "type": "number", "visible": "true", "disabled": "false", "editable": "true"}
+                        ]}
+                    ]
+
+                }
             ]
         };
+
     </script>
     <script src="js/global_functions.js" type="text/javascript"></script>
 

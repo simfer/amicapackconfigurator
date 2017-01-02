@@ -124,7 +124,7 @@
                         if (response["status"] === "success") {
                             var username = response["result"]["username"];
                             var password = response["result"]["password"];
-
+                            localStorage.idutente = response["result"]["idutente"];
                             $("#lg-form").slideUp('slow', function(){
                                 window.location.href = 'home.php';
                             });

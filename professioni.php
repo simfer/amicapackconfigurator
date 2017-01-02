@@ -14,9 +14,6 @@ include_once "daelib.php";
     <div class="row">
         <div class="col-lg-12 col-md-12">
             <div id="toolbar">
-                <button id="btnNew" type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal"><i
-                        class="glyphicon glyphicon-plus"></i>&nbsp;Aggiungi
-                </button>
                 <button id="btnPrint" type="button" class="btn btn-success"><i class="glyphicon glyphicon-print"></i>&nbsp;Stampa
                 </button>
             </div>
@@ -85,7 +82,7 @@ include_once "daelib.php";
                 <thead>
                 <tr>
                     <th data-field="state" data-radio="true"></th>
-                    <th data-field="idprofessione" data-align="center" data-sortable="true">ID Param.</th>
+                    <th data-field="idprofessione" data-align="center" data-visible="false">ID Prof.</th>
                     <th data-field="descrizione" data-align="left" data-sortable="true">Descrizione</th>
                     <th data-field="valore" data-align="left" data-sortable="true">Valore</th>
                     <th data-field="attivo" data-align="center" data-visible="false" data-sortable="false">Attivo</th>
@@ -105,30 +102,37 @@ include_once "daelib.php";
     include_once "footer.php";
     ?>
     <script type="text/javascript">
-        var oFields = {
-            "thetable":"professioni",
-            "thekeyfield":"idprofessione",
-            "therules": {
-                "descrizione": {required: true},
-                "valore": {required: true}
-            },
-            "themessages": {
-                "descrizione": {required: "Campo obbligatorio!"},
-                "valore": {required: "Campo obbligatorio!"}
-            },
-            "fields": [
+        var oForm = {
+            "table":"professioni",
+            "labelForNew":"Nuova professione",
+            "labelForEdit":"Modifica professione",
+            "keyfield":"idprofessione",
+            "autoincrement":"true",
+            "buttons": [
+                {"name": "btnChiudi","caption":"Chiudi","class":"btn btn-default","dismiss":"true"},
+                {"name": "btnSalva","caption":"Salva","class":"btn btn-primary","dismiss":"true"}],
+            "panels":[
                 {
-                    "name": "idprofessione",
-                    "label": "ID",
-                    "type": "hidden",
-                    "visible": "true",
-                    "disabled": "false",
-                    "autoincrement": "true"
-                },
-                {"name": "descrizione", "label": "Descrizione", "type": "text", "visible": "true", "disabled": "false", "editable": "true"},
-                {"name": "valore", "label": "Valore", "type": "text", "visible": "true", "disabled": "false", "editable": "true"}
+                    "name": "professione", "description":"Professione", "collapsable":"false","collapsed":"false",
+                    "rules": {
+                        "descrizione": {required: true},
+                        "valore": {required: true}
+                    },
+                    "messages": {
+                        "descrizione": {required: "Campo obbligatorio!"},
+                        "valore": {required: "Campo obbligatorio!"}
+                    },
+                    "rows": [
+                        {"cells":[
+                            {"name": "descrizione", "label": "Descrizione", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"},
+                            {"name": "valore", "label": "Valore", "labelsize":"2","fieldsize":"4", "type": "number", "visible": "true", "disabled": "false", "editable": "true"}
+                        ]}
+                    ]
+
+                }
             ]
         };
+
     </script>
     <script src="js/global_functions.js" type="text/javascript"></script>
 

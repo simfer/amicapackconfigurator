@@ -27,7 +27,10 @@ date_default_timezone_set('Europe/Rome');
  * @since 2009-03-20
  */
 
-$tabella = $_GET['t'];
+//$tabella = $_POST;
+
+var_dump($_POST);
+die();
 
 // Include the main TCPDF library (search for installation path).
 require_once('TCPDF/tcpdf.php');

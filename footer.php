@@ -29,6 +29,8 @@
 <!-- Custom Theme JavaScript -->
 <script src="dist/js/sb-admin-2.js"></script>
 
+<!-- MD5 Plugin -->
+<script src="js/jquery.md5.js"></script>
 
 <script type="text/javascript">
     toastr.options = {
@@ -49,13 +51,10 @@
         "hideMethod": "fadeOut"
     };
 
-    console.log(localStorage.message);
-
     var message = localStorage.message;
     var messagetype = localStorage.messagetype;
 
     if (message && message !== "") {
-        console.log("pippo");
         var messagetype = localStorage.messagetype;
         if (messagetype == "success") {
             toastr.info("OK: " + message);

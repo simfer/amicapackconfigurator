@@ -103,7 +103,7 @@ include_once "daelib.php";
                                 </div>
                             </div>
                             <div class="panel panel-primary">
-                                <div class="panel-heading">Polizza AXA</div>
+                                <div class="panel-heading">Polizza RCA</div>
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-2 col-md-2">
@@ -212,7 +212,7 @@ include_once "daelib.php";
                     <th data-field="nome" data-align="left" data-sortable="true">Nome</th>
                     <th data-field="professione" data-align="left" data-sortable="true"  data-visible="false">Professione</th>
                     <th data-field="datanascita" data-align="left" data-sortable="true" data-formatter="DateFormatWEB">D. Nasc.</th>
-                    <th data-field="axa" data-align="left" data-sortable="false">AXA</th>
+                    <th data-field="rca" data-align="left" data-sortable="false">RCA</th>
                     <th data-field="augusta" data-align="left" data-sortable="false">Augusta</th>
                     <th data-field="accessori" data-align="left" data-sortable="false">Accessori</th>
                     <th data-field="copertureaggiuntive" data-align="left" data-sortable="false">Copert. Agg.</th>

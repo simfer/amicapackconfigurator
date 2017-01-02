@@ -64,8 +64,8 @@
                             <i class="fa fa-check fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge"><?=GetNumberOfRecords("polizzeaxa","attivo=1")?></div>
-                            <div>Polizze AXA</div>
+                            <div class="huge"><?=GetNumberOfRecords("polizzerca","attivo=1")?></div>
+                            <div>Polizze RCA</div>
                         </div>
                     </div>
                 </div>
@@ -175,8 +175,7 @@
 
 <script type="text/javascript">
     jQuery().ready(function() {
-
-
+        //console.log("idutente = " + localStorage.idutente);
     });
 </script>
 

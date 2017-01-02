@@ -10,7 +10,7 @@ function CreateSelect($selectName,$tableName,$othercolumns,$keycolumn,$displayco
 
     //try the connection to the database and execute the SQL statement
     try{
-        $conn = new PDO ( AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8") );
+        $conn = new PDO ( APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8") );
         $conn->setAttribute ( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
         if ($othercolumns) {
@@ -102,7 +102,7 @@ function CreateTableAccessori() {
 
     //try the connection to the database and execute the SQL statement
     try{
-        $conn = new PDO ( AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8") );
+        $conn = new PDO ( APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8") );
         $conn->setAttribute ( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
 
@@ -201,7 +201,7 @@ function CreateDatalist($dataListName,$tableName,$keycolumn,$displaycolumn,$sort
 
     //try the connection to the database and execute the SQL statement
     try{
-        $conn = new PDO ( AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8") );
+        $conn = new PDO ( APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8") );
         $conn->setAttribute ( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
         $sql ="SELECT DISTINCT " . $keycolumn . " as keycolumn, " . $displaycolumn . " as displaycolumn FROM " . $tableName;
         if ($sortcolumn) {
@@ -233,7 +233,7 @@ function CreateDatalist($dataListName,$tableName,$keycolumn,$displaycolumn,$sort
 
 function GetNumberOfRecords($tableName,$filter) {
     try{
-        $conn = new PDO ( AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8") );
+        $conn = new PDO ( APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8") );
         $conn->setAttribute ( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
         $sql ="SELECT * FROM " . $tableName . " WHERE 1=1 ";
         if ($filter) {
@@ -253,10 +253,10 @@ function GetPermissions($userID) {
     $results = [];
     if($userID){
         try {
-            $conn = new PDO(AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD);
+            $conn = new PDO(APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD);
             $conn->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $stmt = $conn->prepare("SELECT distinct b.tabella FROM sicurezza a inner join autorizzazioni b on a.idautorizzazione=b.idautorizzazione where idutente=:idutente");
+            $stmt = $conn->prepare("SELECT distinct b.idtabella as tabella FROM sicurezza a inner join autorizzazioni b on a.idautorizzazione=b.idautorizzazione where idutente=:idutente");
             $stmt->execute(array("idutente" => $userID));
 
             while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

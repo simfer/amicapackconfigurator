@@ -6,7 +6,7 @@ include_once "daelib.php";
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Parametri</h1>
+            <h1 class="page-header">Autorizzazioni</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -14,6 +14,9 @@ include_once "daelib.php";
     <div class="row">
         <div class="col-lg-12 col-md-12">
             <div id="toolbar">
+                <button id="btnNew" type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal"><i
+                        class="glyphicon glyphicon-plus"></i>&nbsp;Aggiungi
+                </button>
                 <button id="btnPrint" type="button" class="btn btn-success"><i class="glyphicon glyphicon-print"></i>&nbsp;Stampa
                 </button>
             </div>
@@ -67,8 +70,8 @@ include_once "daelib.php";
                     </div>
                 </div>
             </div>
-            <table id="table-parametri"
-                   data-toggle="table-parametri"
+            <table id="table-autorizzazioni"
+                   data-toggle="table-autorizzazioni"
                    data-method="GET"
                    data-toolbar="#toolbar"
                    data-search="true"
@@ -76,15 +79,16 @@ include_once "daelib.php";
                    data-show-columns="true"
                    data-pagination="true"
                    data-page-list="[10, 25, 50, 100, ALL]"
-                   data-url="get_table_data.php?tabella=parametri"
+                   data-url="get_table_data.php?tabella=autorizzazioni"
                    data-click-to-select="true"
             >
                 <thead>
                 <tr>
                     <th data-field="state" data-radio="true"></th>
-                    <th data-field="idparametro" data-align="center" data-visible="false">ID Parametro</th>
+                    <th data-field="idautorizzazione" data-align="center" data-visible="false">ID Autorizzazione</th>
                     <th data-field="descrizione" data-align="left" data-sortable="true">Descrizione</th>
-                    <th data-field="valore" data-align="left" data-sortable="true">Valore</th>
+                    <th data-field="azione" data-align="left" data-sortable="true">Azione</th>
+                    <th data-field="tabella" data-align="left" data-sortable="true">Tabella</th>
                     <th data-field="attivo" data-align="center" data-visible="false" data-sortable="false">Attivo</th>
                     <th data-field="operate"
                         data-formatter="operateFormatter"
@@ -103,34 +107,46 @@ include_once "daelib.php";
     ?>
     <script type="text/javascript">
         var oForm = {
-            "table":"parametri",
-            "labelForNew":"Nuovo parametro",
-            "labelForEdit":"Modifica parametro",
-            "keyfield":"idparametro",
+            "table":"autorizzazioni",
+            "labelForNew":"Nuovo autorizzazione",
+            "labelForEdit":"Modifica autorizzazione",
+            "keyfield":"idautorizzazione",
             "autoincrement":"true",
             "buttons": [
                 {"name": "btnChiudi","caption":"Chiudi","class":"btn btn-default","dismiss":"true"},
                 {"name": "btnSalva","caption":"Salva","class":"btn btn-primary","dismiss":"true"}],
             "panels":[
                 {
-                    "name": "parametro", "description":"Parametro", "collapsable":"false","collapsed":"false",
+                    "name": "autorizzazione", "description":"Autorizzazione", "collapsable":"false","collapsed":"false",
                     "rules": {
-                        "descrizione": {required: true},
-                        "valore": {required: true}
+                        "descrizione": {required: true}
                     },
                     "messages": {
-                        "descrizione": {required: "Campo obbligatorio!"},
-                        "valore": {required: "Campo obbligatorio!"}
+                        "descrizione": {required: "Campo obbligatorio!"}
                     },
                     "rows": [
                         {"cells":[
-                            {"name": "nome", "label": "Nome", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"},
-                            {"name": "descrizione", "label": "Descrizione", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"},
-                            {"name": "valore", "label": "Valore", "labelsize":"2","fieldsize":"4", "type": "number", "visible": "true", "disabled": "false", "editable": "true"},
-                            {"name": "tipovalore", "label": "Tipo Valore", "labelsize":"2","fieldsize":"4", "type": "select", "selectParams": {
-                                "source": "list",
-                                "values": {"P":"Percentuale","A":"Assoluto"}
-                            }, "visible": "true", "disabled": "false", "editable": "true"}
+                            {"name": "descrizione", "label": "Descrizione", "labelsize":"2","fieldsize":"10", "type": "text", "visible": "true", "disabled": "false", "editable": "true"}
+                        ]},
+                        {"cells":[
+                            {"name": "idazione", "label": "Azione", "labelsize":"2","fieldsize":"10", "type": "select", "selectParams": {
+                                "source": "table",
+                                "table":"azioni",
+                                "keycolumn":"idazione",
+                                "displaycolumn":"descrizione",
+                                "filter":"attivo=1",
+                                "sortcolumn":"descrizione"
+                            },"visible": "true", "disabled": "false", "editable": "true"}
+                        ]},
+                        {"cells":[
+                            {"name": "idtabella", "label": "Tabella", "labelsize":"2","fieldsize":"10", "type": "select", "selectParams": {
+                                "source": "table",
+                                "table":"tabelle",
+                                "keycolumn":"idtabella",
+                                "displaycolumn":"descrizione",
+                                "filter":"attivo=1",
+                                "sortcolumn":"descrizione"
+                            },"visible": "true", "disabled": "false", "editable": "true"}
                         ]}
                     ]
 

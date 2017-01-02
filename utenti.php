@@ -6,7 +6,7 @@ include_once "daelib.php";
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Parametri</h1>
+            <h1 class="page-header">Utenti</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -14,6 +14,9 @@ include_once "daelib.php";
     <div class="row">
         <div class="col-lg-12 col-md-12">
             <div id="toolbar">
+                <button id="btnNew" type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal"><i
+                        class="glyphicon glyphicon-plus"></i>&nbsp;Aggiungi
+                </button>
                 <button id="btnPrint" type="button" class="btn btn-success"><i class="glyphicon glyphicon-print"></i>&nbsp;Stampa
                 </button>
             </div>
@@ -29,6 +32,7 @@ include_once "daelib.php";
                 .table-user-information > tbody > tr > td {
                     border-top: 0;
                 }
+                #editModal .modal-dialog  {width:60%;}
             </style>
 
             <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
@@ -67,8 +71,9 @@ include_once "daelib.php";
                     </div>
                 </div>
             </div>
-            <table id="table-parametri"
-                   data-toggle="table-parametri"
+            <table id="table-utenti"
+                   data-toggle="table-utenti"
+                   data-url="get_table_data.php?tabella=utenti"
                    data-method="GET"
                    data-toolbar="#toolbar"
                    data-search="true"
@@ -76,16 +81,16 @@ include_once "daelib.php";
                    data-show-columns="true"
                    data-pagination="true"
                    data-page-list="[10, 25, 50, 100, ALL]"
-                   data-url="get_table_data.php?tabella=parametri"
                    data-click-to-select="true"
             >
                 <thead>
                 <tr>
                     <th data-field="state" data-radio="true"></th>
-                    <th data-field="idparametro" data-align="center" data-visible="false">ID Parametro</th>
-                    <th data-field="descrizione" data-align="left" data-sortable="true">Descrizione</th>
-                    <th data-field="valore" data-align="left" data-sortable="true">Valore</th>
-                    <th data-field="attivo" data-align="center" data-visible="false" data-sortable="false">Attivo</th>
+                    <th data-field="idutente" data-align="center" data-sortable="true">ID Utente</th>
+                    <th data-field="username" data-align="left" data-sortable="true">Username</th>
+                    <th data-field="cognome" data-align="left" data-sortable="true">Cognome</th>
+                    <th data-field="nome" data-align="left" data-sortable="true">Nome</th>
+                    <th data-field="email" data-align="left" data-visible="true" data-sortable="true">Email</th>
                     <th data-field="operate"
                         data-formatter="operateFormatter"
                         data-events="operateEvents">Azione
@@ -103,34 +108,38 @@ include_once "daelib.php";
     ?>
     <script type="text/javascript">
         var oForm = {
-            "table":"parametri",
-            "labelForNew":"Nuovo parametro",
-            "labelForEdit":"Modifica parametro",
-            "keyfield":"idparametro",
+            "table":"utenti",
+            "labelForNew":"Nuovo utente",
+            "labelForEdit":"Modifica utente",
+            "keyfield":"idutente",
             "autoincrement":"true",
             "buttons": [
                 {"name": "btnChiudi","caption":"Chiudi","class":"btn btn-default","dismiss":"true"},
                 {"name": "btnSalva","caption":"Salva","class":"btn btn-primary","dismiss":"true"}],
             "panels":[
                 {
-                    "name": "parametro", "description":"Parametro", "collapsable":"false","collapsed":"false",
+                    "name": "utente", "description":"Utente", "collapsable":"false","collapsed":"false",
                     "rules": {
-                        "descrizione": {required: true},
-                        "valore": {required: true}
+                        "username": {required: true},
+                        "password": {required: true, minlength: 6}
                     },
                     "messages": {
-                        "descrizione": {required: "Campo obbligatorio!"},
-                        "valore": {required: "Campo obbligatorio!"}
+                        "username": {required: "Campo obbligatorio!"},
+                        "password": {required: "Campo obbligatorio!", minlength: "La password deve essere lunga almeno 6 caratteri!"}
                     },
                     "rows": [
                         {"cells":[
-                            {"name": "nome", "label": "Nome", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"},
-                            {"name": "descrizione", "label": "Descrizione", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"},
-                            {"name": "valore", "label": "Valore", "labelsize":"2","fieldsize":"4", "type": "number", "visible": "true", "disabled": "false", "editable": "true"},
-                            {"name": "tipovalore", "label": "Tipo Valore", "labelsize":"2","fieldsize":"4", "type": "select", "selectParams": {
-                                "source": "list",
-                                "values": {"P":"Percentuale","A":"Assoluto"}
-                            }, "visible": "true", "disabled": "false", "editable": "true"}
+                            {"name": "username", "label": "Username", "labelsize":"2","fieldsize":"10", "type": "text", "visible": "true", "disabled": "false", "editable": "true"}
+                        ]},
+                        {"cells":[
+                            {"name": "password", "label": "Password", "labelsize":"2","fieldsize":"4", "type": "password", "visible": "false", "disabled": "false", "editable": "true"}
+                        ]},
+                        {"cells":[
+                            {"name": "cognome", "label": "Cognome", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"},
+                            {"name": "nome", "label": "Nome", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"}
+                        ]},
+                        {"cells":[
+                            {"name": "email", "label": "Email", "labelsize":"2","fieldsize":"10", "type": "email", "visible": "true", "disabled": "false", "editable": "true"}
                         ]}
                     ]
 
@@ -139,5 +148,6 @@ include_once "daelib.php";
         };
 
     </script>
+
     <script src="js/global_functions.js" type="text/javascript"></script>
 

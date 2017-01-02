@@ -6,7 +6,7 @@ include_once "daelib.php";
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Parametri</h1>
+            <h1 class="page-header">Tipi alimentazione</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -67,8 +67,8 @@ include_once "daelib.php";
                     </div>
                 </div>
             </div>
-            <table id="table-parametri"
-                   data-toggle="table-parametri"
+            <table id="table-tipialimentazione"
+                   data-toggle="table-tipialimentazione"
                    data-method="GET"
                    data-toolbar="#toolbar"
                    data-search="true"
@@ -76,15 +76,14 @@ include_once "daelib.php";
                    data-show-columns="true"
                    data-pagination="true"
                    data-page-list="[10, 25, 50, 100, ALL]"
-                   data-url="get_table_data.php?tabella=parametri"
+                   data-url="get_table_data.php?tabella=tipialimentazione"
                    data-click-to-select="true"
             >
                 <thead>
                 <tr>
                     <th data-field="state" data-radio="true"></th>
-                    <th data-field="idparametro" data-align="center" data-visible="false">ID Parametro</th>
+                    <th data-field="idtipoalimentazione" data-align="center" data-visible="false">ID Tipo Alimentazione</th>
                     <th data-field="descrizione" data-align="left" data-sortable="true">Descrizione</th>
-                    <th data-field="valore" data-align="left" data-sortable="true">Valore</th>
                     <th data-field="attivo" data-align="center" data-visible="false" data-sortable="false">Attivo</th>
                     <th data-field="operate"
                         data-formatter="operateFormatter"
@@ -103,34 +102,26 @@ include_once "daelib.php";
     ?>
     <script type="text/javascript">
         var oForm = {
-            "table":"parametri",
-            "labelForNew":"Nuovo parametro",
-            "labelForEdit":"Modifica parametro",
-            "keyfield":"idparametro",
+            "table":"tipialimentazione",
+            "labelForNew":"Nuovo tipo alimentazione",
+            "labelForEdit":"Modifica tipo alimentazione",
+            "keyfield":"idtipoalimentazione",
             "autoincrement":"true",
             "buttons": [
                 {"name": "btnChiudi","caption":"Chiudi","class":"btn btn-default","dismiss":"true"},
                 {"name": "btnSalva","caption":"Salva","class":"btn btn-primary","dismiss":"true"}],
             "panels":[
                 {
-                    "name": "parametro", "description":"Parametro", "collapsable":"false","collapsed":"false",
+                    "name": "tipoalimentazione", "description":"Tipo alimentazione", "collapsable":"false","collapsed":"false",
                     "rules": {
-                        "descrizione": {required: true},
-                        "valore": {required: true}
+                        "descrizione": {required: true}
                     },
                     "messages": {
-                        "descrizione": {required: "Campo obbligatorio!"},
-                        "valore": {required: "Campo obbligatorio!"}
+                        "descrizione": {required: "Campo obbligatorio!"}
                     },
                     "rows": [
                         {"cells":[
-                            {"name": "nome", "label": "Nome", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"},
-                            {"name": "descrizione", "label": "Descrizione", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"},
-                            {"name": "valore", "label": "Valore", "labelsize":"2","fieldsize":"4", "type": "number", "visible": "true", "disabled": "false", "editable": "true"},
-                            {"name": "tipovalore", "label": "Tipo Valore", "labelsize":"2","fieldsize":"4", "type": "select", "selectParams": {
-                                "source": "list",
-                                "values": {"P":"Percentuale","A":"Assoluto"}
-                            }, "visible": "true", "disabled": "false", "editable": "true"}
+                            {"name": "descrizione", "label": "Descrizione", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"}
                         ]}
                     ]
 

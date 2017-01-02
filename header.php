@@ -8,7 +8,7 @@ session_start();
 if (isset($_SESSION ["idutente"]) && !empty($_SESSION ["idutente"])) {
     $idutente = $_SESSION ["idutente"];
     $res = GetPermissions($idutente);
-    //var_dump($_SESSION);
+    //var_dump($res);
     //die();
 } else {
     header("Location: index.php");
@@ -110,17 +110,6 @@ if (isset($_SESSION ["idutente"]) && !empty($_SESSION ["idutente"])) {
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
-                    <li class="sidebar-search">
-                        <div class="input-group custom-search-form">
-                            <input type="text" class="form-control" placeholder="Cerca ...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                        <!-- /input-group -->
-                    </li>
                     <li>
                         <a href="home.php"><i class="fa fa-home fa-fw"></i> Home</a>
                     </li>
@@ -154,13 +143,22 @@ if (isset($_SESSION ["idutente"]) && !empty($_SESSION ["idutente"])) {
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Tabelle di sistema<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
+                                    <a href="utenti.php"> Utenti</a>
+                                </li>
+                                <li>
+                                    <a href="gruppi.php"> Gruppi</a>
+                                </li>
+                                <li>
+                                    <a href="ruoli.php"> Ruoli</a>
+                                </li>
+                                <li>
+                                    <a href="autorizzazioni.php"> Autorizzazioni</a>
+                                </li>
+                                <li>
+                                    <a href="sicurezza.php"> Permessi</a>
+                                </li>
+                                <li>
                                     <a href="parametri.php"> Parametri</a>
-                                </li>
-                                <li>
-                                    <a href="professioni.php"> Professioni</a>
-                                </li>
-                                <li>
-                                    <a href="etaintestatari.php"> Età intestatari</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

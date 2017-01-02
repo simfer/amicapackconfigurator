@@ -60,11 +60,17 @@ if (isset($_POST['ajax_function']) && !empty($_POST['ajax_function'])) {
         case 'SalvaPreventivo' :
             SalvaPreventivo();
             break;
-        case 'SalvaRecord' :
-            SalvaRecord();
+        case 'SaveRecord' :
+            SaveRecord();
             break;
-        case 'SalvaUtente' :
-            SalvaUtente();
+        case 'SalvaUtentiGruppi' :
+            SalvaUtentiGruppi();
+            break;
+        case 'SalvaGruppiRuoli' :
+            SalvaGruppiRuoli();
+            break;
+        case 'SalvaRuoliAutorizzazioni' :
+            SalvaRuoliAutorizzazioni();
             break;
         case 'TestAjax' :
             TestAjax();
@@ -107,7 +113,7 @@ function ControllaEsistenzaCodiceFiscale()
 
     if ($cfisc) {
         try {
-            $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $stmt = $conn->prepare($sql);
@@ -169,7 +175,7 @@ function ControllaEsistenzaPartitaIva()
 
     if ($piva) {
         try {
-            $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             //$stmt = $conn->prepare("SELECT * FROM clienti where piva = :piva");
@@ -222,7 +228,7 @@ function CreaLista()
 
         //try the connection to the database and execute the SQL statement
         try {
-            $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $sql = "SELECT DISTINCT " . $keycolumn . " as keycolumn, " . $displaycolumn . " as displaycolumn FROM " . $thetable;
             if ($sortcolumn) {
@@ -259,7 +265,7 @@ function CreaLista()
  ***************************************/
 function CreateOptions()
 {
-    $thetable = $_POST['thetable'];
+    $table = $_POST['table'];
     $keycolumn = $_POST['keycolumn'];
     $displaycolumn = $_POST['displaycolumn'];
     $filter = (isset($_POST['filter']) ? $_POST['filter'] : "");
@@ -269,13 +275,13 @@ function CreateOptions()
     //$list = '';
     $list = '<option value=""></option>';
 
-    if ($thetable && $keycolumn && $displaycolumn) {
+    if ($table && $keycolumn && $displaycolumn) {
 
         //try the connection to the database and execute the SQL statement
         try {
-            $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "SELECT DISTINCT " . $keycolumn . " as keycolumn, " . $displaycolumn . " as displaycolumn FROM " . $thetable;
+            $sql = "SELECT DISTINCT " . $keycolumn . " as keycolumn, " . $displaycolumn . " as displaycolumn FROM " . $table;
             if ($filter) {
                 $sql .= " WHERE " . $filter;
             }
@@ -322,7 +328,7 @@ function DisattivaRecord()
     $loggedUser = 1; //$_SESSION ["idutente"];
 
     try {
-        $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+        $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "UPDATE " . $thetable . " SET attivo = 0, modificatoda = " . $loggedUser . ",operazione='D', dataoperazione=SYSDATE() WHERE " . $keyfield . " ='" . $keyvalue . "'";
 
@@ -359,7 +365,7 @@ function LeggiCoefficienteAugusta()
 
     if ($provincia && $tipologia && $categoria && $durata) {
         try {
-            $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $sql = "SELECT b.coeff as coefficiente FROM zoneaugusta a inner join coeffaugusta b
               on a.tipologia=b.tipologia and b.zona=IF(a.tipologia = 'K', 0, a.zona)
@@ -407,7 +413,7 @@ function LeggiRecord()
 
     if ($thetable && $keyfield && $keyvalue) {
         try {
-            $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $sql = "SELECT * FROM " . $thetable . " WHERE " . $keyfield . " = " . $keyvalue;
@@ -438,7 +444,7 @@ function LeggiPreventivo()
 {
     $idpreventivo = $_POST['idpreventivo'];
     $sql = "SELECT a.*,
-                  (select case count(*) when 0 then 'NO' else 'SI' end from polizzeaxa x where x.idpreventivo=a.idpreventivo) as axa,
+                  (select case count(*) when 0 then 'NO' else 'SI' end from polizzerca x where x.idpreventivo=a.idpreventivo) as rca,
                   (select case count(*) when 0 then 'NO' else 'SI' end from polizzeaugusta y where y.idpreventivo=a.idpreventivo) as augusta,
                   (select case count(*) when 0 then 'NO' else 'SI' end from polizzeaccessori z where z.idpreventivo=a.idpreventivo) as accessori, 
                   (select case count(*) when 0 then 'NO' else 'SI' end from polizzecopertureaggiuntive w where w.idpreventivo=a.idpreventivo) as copertureaggiuntive 
@@ -447,7 +453,7 @@ function LeggiPreventivo()
 
     if ($idpreventivo) {
         try {
-            $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $stmt = $conn->prepare($sql);
@@ -458,7 +464,7 @@ function LeggiPreventivo()
                 // fetch the row
                 $preventivo = $stmt->fetch(PDO::FETCH_ASSOC);
                 $idcliente = $preventivo["idcliente"];
-                $axaSi = ($preventivo["axa"] == "SI" ? true : false);
+                $rcaSi = ($preventivo["rca"] == "SI" ? true : false);
                 $augustaSi = ($preventivo["augusta"] == "SI" ? true : false);
                 $accessoriSi = ($preventivo["accessori"] == "SI" ? true : false);
                 $copertureaggiuntiveSi = ($preventivo["copertureaggiuntive"] == "SI" ? true : false);
@@ -468,13 +474,13 @@ function LeggiPreventivo()
                 $stmtCliente->execute();
                 $cliente = $stmtCliente->fetch(PDO::FETCH_ASSOC);
 
-                if ($axaSi) {
-                    $sqlAxa = "select * from polizzeaxa a inner join zone b on a.idcomune = b.idcomune WHERE a.attivo=1 and a.idpreventivo='" . $idpreventivo . "'";
-                    $stmtAxa = $conn->prepare($sqlAxa);
-                    $stmtAxa->execute();
-                    $axa = $stmtAxa->fetch(PDO::FETCH_ASSOC);
+                if ($rcaSi) {
+                    $sqlRCA = "select * from polizzerca a inner join zone b on a.idcomune = b.idcomune WHERE a.attivo=1 and a.idpreventivo='" . $idpreventivo . "'";
+                    $stmtRCA = $conn->prepare($sqlRCA);
+                    $stmtRCA->execute();
+                    $rca = $stmtRCA->fetch(PDO::FETCH_ASSOC);
                 } else {
-                    $axa = null;
+                    $rca = null;
                 }
 
                 if ($augustaSi) {
@@ -506,7 +512,7 @@ function LeggiPreventivo()
 
                 echo json_encode(array(
                     'status' => 'success',
-                    'result' => array('preventivo' => $preventivo, 'cliente' => $cliente, 'axa' => $axa, 'augusta' => $augusta, 'accessori' => $accessori, 'copertureaggiuntive' => $copertureaggiuntive),
+                    'result' => array('preventivo' => $preventivo, 'cliente' => $cliente, 'rca' => $rca, 'augusta' => $augusta, 'accessori' => $accessori, 'copertureaggiuntive' => $copertureaggiuntive),
                     'sql' => $idcliente
                 ));
             } else {
@@ -558,7 +564,7 @@ function LeggiTabellaFormatoJSON()
 
         //try the connection to the database and execute the SQL statement
         try {
-            $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $sql = "SELECT * FROM " . $thetable;
             if ($filter) {
@@ -597,7 +603,7 @@ function LeggiUtente()
 
     if ($idutente) {
         try {
-            $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $stmt = $conn->prepare($sql);
@@ -653,7 +659,7 @@ function LeggiValoreEtaIntestatario()
 
     if ($idetaintestatario) {
         try {
-            $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $sql = "SELECT valore as valoreetaintestatario FROM etaintestatari WHERE idetaintestatario=" . $idetaintestatario;
 
@@ -701,7 +707,7 @@ function LeggiValorePremioBase()
 
     if ($idcomune && $idclassepotenza && $classemerito) {
         try {
-            $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $stmt = $conn->prepare($sql);
@@ -787,7 +793,7 @@ function LeggiValoriParametri()
 
         //try the connection to the database and execute the SQL statement
         try {
-            $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
@@ -835,7 +841,7 @@ function Login()
 
     if ($username && $password) {
         try {
-            $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $stmt = $conn->prepare($sql);
@@ -916,7 +922,7 @@ function SalvaCliente()
         $sql = 'INSERT INTO clienti(' . $columns . ') VALUES(' . $values . ')';
 
         try {
-            $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             //prepare the sql string
@@ -956,7 +962,7 @@ function SalvaPreventivo()
         $operazione = $_POST["preventivo"]["operazione"];
 
         try {
-            $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             try {
@@ -974,8 +980,8 @@ function SalvaPreventivo()
                 $stmt = $conn->prepare($sql);
                 $stmt->execute();
 
-                // cancello la polizza axa
-                $sql = "DELETE FROM polizzeaxa WHERE idpreventivo='" . $idpreventivo . "';";
+                // cancello la polizza rca
+                $sql = "DELETE FROM polizzerca WHERE idpreventivo='" . $idpreventivo . "';";
                 $fullSql .= $sql;
                 $stmt = $conn->prepare($sql);
                 $stmt->execute();
@@ -1004,10 +1010,10 @@ function SalvaPreventivo()
                 $stmt = $conn->prepare($sql);
                 $stmt->execute();
 
-                // Query POLIZZEAXA
-                $axa = $_POST["axa"];
-                if ($axa) {
-                    $sql = GeneraQuery($_POST["axa"], "polizzeaxa", $loggedUser, $operazione);
+                // Query POLIZZERCA
+                $rca = $_POST["rca"];
+                if ($rca) {
+                    $sql = GeneraQuery($_POST["rca"], "polizzerca", $loggedUser, $operazione);
                     $fullSql .= $sql;
                     $stmt = $conn->prepare($sql);
                     $stmt->execute();
@@ -1075,22 +1081,22 @@ function SalvaPreventivo()
     }
 }
 
+
 /***************************************
- * SalvaRecord                         *
+ * SaveRecord                          *
  ***************************************/
-function SalvaRecord()
+function SaveRecord()
 {
     $table = $_POST['table'];
     $key = $_POST['key'];
     $columns = $_POST['columns'];
-    $changedBy = $_POST['modificatoda'];
-    $operation = $_POST['operazione'];
     $attivo = $_POST['attivo'];
-    //$current_user = wp_get_current_user();
-    //$cuser = (!empty($current_user->user_login) ? $current_user->user_login : 0);
+    $modificatoda = $_POST["modificatoda"];
+    $operazione = $_POST['operazione'];
+    $autoincrement = $_POST['autoincrement'];
 
     try {
-        $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+        $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         if (!empty($_POST['keyvalue'])) {
@@ -1108,7 +1114,7 @@ function SalvaRecord()
                 }
             }
 
-            $set .= "attivo='" . $attivo . "',modificatoda='" . $changedBy . "',operazione='" . $operation . "',dataoperazione=SYSDATE()";
+            $set .= "attivo='" . $attivo . "',modificatoda='" . $modificatoda . "',operazione='" . $operazione . "',dataoperazione=SYSDATE()";
 
             $sql .= $set . " WHERE " . $key . "='" . $keyvalue . "'";
 
@@ -1116,7 +1122,7 @@ function SalvaRecord()
             $timestamp = time();
             $sql = "INSERT INTO " . $table . " (";
 
-            if (!$_POST['autoincrement']) {
+            if (!$autoincrement) {
                 $keyvalue = substr(strtoupper($table), 0, 2) . $timestamp;
                 $fields = $key . ",";
                 $values = "'" . $keyvalue . "',";
@@ -1133,7 +1139,7 @@ function SalvaRecord()
             }
 
             $fields .= "attivo,modificatoda,operazione,dataoperazione";
-            $values .= "'" . $attivo . "','" . $changedBy . "','" . $operation . "',SYSDATE()";
+            $values .= "'" . $attivo . "','" . $modificatoda . "','" . $operazione . "',SYSDATE()";
 
             $sql .= $fields . ") VALUES (" . $values . ")";
         }
@@ -1160,54 +1166,92 @@ function SalvaRecord()
     $conn = null;
 }
 
-/***************************************
- * SalvaUtente                         *
- ***************************************/
-function SalvaUtente()
-{
-    $idutente = $_POST['idutente'];
-    $cognome = $_POST['cognome'];
-    $nome = $_POST['nome'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $email = $_POST['email'];
 
+function SalvaUtentiGruppi()
+{
+    $searchIDs = $_POST['searchIDs'];
+    $sqlTemp = 'TRUNCATE TABLE utenti_gruppi;INSERT INTO utenti_gruppi (idutente,idgruppo) VALUES ';
+    foreach ($searchIDs as $v) {
+        $pieces = explode("_", $v);
+        $sqlTemp .= '(' . $pieces[1] . ',' . $pieces[2] . '),';
+    }
+
+    $sql = rtrim($sqlTemp, ",") . ";";
 
     try {
-        $conn = new PDO (AXA_DB_DSN, AXA_DB_USER, AXA_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+        $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $sql = "UPDATE utenti SET cognome =:cognome, nome =:nome, username =:username," .
-            (!empty($password) ? "password =:password," : "") . "email =:email, modificatoda =:idutente,
-                operazione='M', dataoperazione=SYSDATE() WHERE idutente =:idutente";
-
         //prepare the sql string
         $stmt = $conn->prepare($sql);
-        $a = array(
-            "cognome" => $cognome,
-            "nome" => $nome,
-            "username" => $username,
-            "email" => $email,
-            "idutente" => $idutente
-        );
-        if (!empty($password)) {
-            $a["password"] = md5($password);
-
-        }
-
-        $stmt->execute($a);
-
+        $stmt->execute();
         echo json_encode(array(
             'status' => 'success',
-            'action' => 'logout',
-            'result' => $idutente,
-            'sql' => $sql
+            'result' => $sql
         ));
-    } catch (Exception $e) {
+    } catch (PDOException $e) {
         echo json_encode(array(
             'status' => 'error',
-            'result' => $e->getMessage(),
-            'sql' => $sql
+            'result' => $e->getMessage()
+        ));
+    }
+    $conn = null;
+}
+
+function SalvaGruppiRuoli()
+{
+    $searchIDs = $_POST['searchIDs'];
+    $sqlTemp = 'TRUNCATE TABLE gruppi_ruoli;INSERT INTO gruppi_ruoli (idgruppo,idruolo) VALUES ';
+    foreach ($searchIDs as $v) {
+        $pieces = explode("_", $v);
+        $sqlTemp .= '(' . $pieces[1] . ',' . $pieces[2] . '),';
+    }
+
+    $sql = rtrim($sqlTemp, ",") . ";";
+
+    try {
+        $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //prepare the sql string
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        echo json_encode(array(
+            'status' => 'success',
+            'result' => $sql
+        ));
+    } catch (PDOException $e) {
+        echo json_encode(array(
+            'status' => 'error',
+            'result' => $e->getMessage()
+        ));
+    }
+    $conn = null;
+}
+
+function SalvaRuoliAutorizzazioni()
+{
+    $searchIDs = $_POST['searchIDs'];
+    $sqlTemp = 'TRUNCATE TABLE ruoli_autorizzazioni;INSERT INTO ruoli_autorizzazioni (idruolo,idautorizzazione) VALUES ';
+    foreach ($searchIDs as $v) {
+        $pieces = explode("_", $v);
+        $sqlTemp .= '(' . $pieces[1] . ',' . $pieces[2] . '),';
+    }
+
+    $sql = rtrim($sqlTemp, ",") . ";";
+
+    try {
+        $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //prepare the sql string
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        echo json_encode(array(
+            'status' => 'success',
+            'result' => $sql
+        ));
+    } catch (PDOException $e) {
+        echo json_encode(array(
+            'status' => 'error',
+            'result' => $e->getMessage()
         ));
     }
     $conn = null;
@@ -1319,10 +1363,10 @@ function GeneraQuery($post, $table, $utente, $operazione)
         case 'clienti' :
             $column_names = array('idcliente', 'codicefiscale', 'cognome', 'nome', 'email', 'telefono', 'cellulare', 'datanascita', 'idprofessione');
             break;
-        case 'polizzeaxa' :
+        case 'polizzerca' :
             $column_names = array('idpreventivo', 'idcliente', 'idmarcaveicolo', 'idtipoveicolo', 'idgruppoetaveicolo', 'idcilindrata',
                 'idclassepotenza', 'idtipoalimentazione', 'classemerito', 'idnumannisenzasinistri', 'idnumsinistridenunciati', 'idmassimale',
-                'idtipofrazionamento', 'blackbox', 'guidaesperta', 'polinfcond', 'idcomune', 'idetaintestatario', 'idprofessione', 'totaleaxa');
+                'idtipofrazionamento', 'blackbox', 'guidaesperta', 'polinfcond', 'idcomune', 'idetaintestatario', 'idprofessione', 'totalerca');
             break;
         case 'polizzeaugusta' :
             $column_names = array('idpreventivo', 'categoria', 'regione', 'provincia', 'duratacopertura', 'valoredaassicurare',
