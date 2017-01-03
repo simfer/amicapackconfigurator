@@ -18,18 +18,7 @@ include_once "daelib.php";
                 </button>
             </div>
             <style type="text/css">
-                .table-user-information > tbody > tr {
-                    border-top: 1px solid rgb(221, 221, 221);
-                }
-
-                .table-user-information > tbody > tr:first-child {
-                    border-top: 0;
-                }
-
-                .table-user-information > tbody > tr > td {
-                    border-top: 0;
-                }
-                #editModal .modal-dialog  {width:60%;}
+                .modal-dialog  {width:60%;}
             </style>
 
             <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
@@ -63,7 +52,7 @@ include_once "daelib.php";
                             <!-- here it comes the detail body-->
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Chiudi</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
                         </div>
                     </div>
                 </div>
@@ -91,7 +80,7 @@ include_once "daelib.php";
                     <th data-field="telefono" data-align="left" data-visible="false" data-sortable="true">Telefono</th>
                     <th data-field="cellulare" data-align="left" data-visible="false" data-sortable="true">Cellulare</th>
                     <th data-field="operate"
-                        data-formatter="operateFormatter"
+                        data-formatter="operateFormatterNoChanges"
                         data-events="operateEvents">Azione
                     </th>
                 </tr>
@@ -105,5 +94,50 @@ include_once "daelib.php";
     <?php
     include_once "footer.php";
     ?>
-    <script src="js/clienti_functions.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var oForm = {
+            "table":"clienti",
+            "labelForNew":"Nuovo cliente",
+            "labelForEdit":"Modifica cliente",
+            "keyfield":"idcliente",
+            "autoincrement":"false",
+            "buttons": [
+                {"name": "btnChiudi","caption":"Chiudi","class":"btn btn-default","dismiss":"true"},
+                {"name": "btnSalva","caption":"Salva","class":"btn btn-primary","dismiss":"true"}],
+            "panels":[
+                {
+                    "name": "cliente", "description":"Cliente", "collapsable":"false","collapsed":"false",
+                    "rules": {
+                        "cognome": {required: true}
+                    },
+                    "messages": {
+                        "cognome": {required: "Campo obbligatorio!"}
+                    },
+                    "rows": [
+                        {"cells":[
+                            {"name": "codicefiscale", "label": "C.Fisc.", "labelsize":"2","fieldsize":"10", "type": "text", "visible": "true", "disabled": "false", "editable": "true"}
+                        ]},
+                        {"cells":[
+                            {"name": "cognome", "label": "Cognome", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"},
+                            {"name": "nome", "label": "Nome", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"}
+                        ]},
+                        {"cells":[
+                            {"name": "telefono", "label": "Telefono", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"},
+                            {"name": "cellulare", "label": "Cellulare", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"}
+                        ]},
+                        {"cells":[
+                            {"name": "datanascita", "label": "Data di nascita", "labelsize":"2","fieldsize":"4", "type": "date", "visible": "true", "disabled": "false", "editable": "true"},
+                            {"name": "professione", "label": "Nome", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"}
+                        ]},
+                        {"cells":[
+                            {"name": "email", "label": "Email", "labelsize":"2","fieldsize":"10", "type": "email", "visible": "true", "disabled": "false", "editable": "true"}
+                        ]}
+                    ]
+                }
+            ]
+        };
+
+    </script>
+
+    <script src="js/global_functions.js" type="text/javascript"></script>
 

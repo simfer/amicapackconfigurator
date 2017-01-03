@@ -18,20 +18,13 @@ include_once "daelib.php";
                 </button>
             </div>
             <style type="text/css">
-                .table-user-information > tbody > tr {
-                    border-top: 1px solid rgb(221, 221, 221);
-                }
-
-                .table-user-information > tbody > tr:first-child {
-                    border-top: 0;
-                }
-
-                .table-user-information > tbody > tr > td {
-                    border-top: 0;
+                .modal-dialog {
+                    width: 60%;
                 }
             </style>
 
-            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal"
+                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -97,23 +90,22 @@ include_once "daelib.php";
     </div>
 
 
-
     <?php
     include_once "footer.php";
     ?>
     <script type="text/javascript">
         var oForm = {
-            "table":"parametri",
-            "labelForNew":"Nuovo parametro",
-            "labelForEdit":"Modifica parametro",
-            "keyfield":"idparametro",
-            "autoincrement":"true",
+            "table": "parametri",
+            "labelForNew": "Nuovo parametro",
+            "labelForEdit": "Modifica parametro",
+            "keyfield": "idparametro",
+            "autoincrement": "true",
             "buttons": [
-                {"name": "btnChiudi","caption":"Chiudi","class":"btn btn-default","dismiss":"true"},
-                {"name": "btnSalva","caption":"Salva","class":"btn btn-primary","dismiss":"true"}],
-            "panels":[
+                {"name": "btnChiudi", "caption": "Chiudi", "class": "btn btn-default", "dismiss": "true"},
+                {"name": "btnSalva", "caption": "Salva", "class": "btn btn-primary", "dismiss": "true"}],
+            "panels": [
                 {
-                    "name": "parametro", "description":"Parametro", "collapsable":"false","collapsed":"false",
+                    "name": "parametro", "description": "Parametro", "collapsable": "false", "collapsed": "false",
                     "rules": {
                         "descrizione": {required: true},
                         "valore": {required: true}
@@ -123,15 +115,58 @@ include_once "daelib.php";
                         "valore": {required: "Campo obbligatorio!"}
                     },
                     "rows": [
-                        {"cells":[
-                            {"name": "nome", "label": "Nome", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"},
-                            {"name": "descrizione", "label": "Descrizione", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"},
-                            {"name": "valore", "label": "Valore", "labelsize":"2","fieldsize":"4", "type": "number", "visible": "true", "disabled": "false", "editable": "true"},
-                            {"name": "tipovalore", "label": "Tipo Valore", "labelsize":"2","fieldsize":"4", "type": "select", "selectParams": {
-                                "source": "list",
-                                "values": {"P":"Percentuale","A":"Assoluto"}
-                            }, "visible": "true", "disabled": "false", "editable": "true"}
-                        ]}
+                        {
+                            "cells": [
+                                {
+                                    "name": "nome",
+                                    "label": "Nome",
+                                    "labelsize": "2",
+                                    "fieldsize": "4",
+                                    "type": "text",
+                                    "visible": "true",
+                                    "disabled": "false",
+                                    "editable": "true"
+                                },
+                                {
+                                    "name": "descrizione",
+                                    "label": "Descrizione",
+                                    "labelsize": "2",
+                                    "fieldsize": "4",
+                                    "type": "text",
+                                    "visible": "true",
+                                    "disabled": "false",
+                                    "editable": "true"
+                                }
+                            ]
+                        },
+                        {
+                            "cells": [
+                                {
+                                    "name": "valore",
+                                    "label": "Valore",
+                                    "labelsize": "2",
+                                    "fieldsize": "4",
+                                    "type": "number",
+                                    "visible": "true",
+                                    "disabled": "false",
+                                    "editable": "true"
+                                },
+                                {
+                                    "name": "tipovalore",
+                                    "label": "Tipo Valore",
+                                    "labelsize": "2",
+                                    "fieldsize": "4",
+                                    "type": "select",
+                                    "selectParams": {
+                                        "source": "list",
+                                        "values": {"P": "Percentuale", "A": "Assoluto"}
+                                    },
+                                    "visible": "true",
+                                    "disabled": "false",
+                                    "editable": "true"
+                                }
+                            ]
+                        }
                     ]
 
                 }

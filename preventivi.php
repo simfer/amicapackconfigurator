@@ -19,178 +19,28 @@ include_once "daelib.php";
                 </button>
             </div>
             <style type="text/css">
-                .table-user-information > tbody > tr {
-                    border-top: 1px solid rgb(221, 221, 221);
+                .modal-dialog {
+                    width: 60%;
                 }
-
-                .table-user-information > tbody > tr:first-child {
-                    border-top: 0;
-                }
-
-                .table-user-information > tbody > tr > td {
-                    border-top: 0;
-                }
-                #dettaglioPreventivo input[type='text'] {width:80%;}
-
             </style>
-
-            <div class="modal fade" id="dettaglioPreventivo" tabindex="-1" role="dialog" aria-labelledby="dettaglioPreventivo"
+            <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModal"
                  aria-hidden="true">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="dettaglioPreventivoLabel">Dettaglio preventivo n. <label id="lbl_idpreventivo"></label></h4>
+                            <h4 class="modal-title" id="myDetailLabel">Dettaglio</h4>
                         </div>
                         <div id="rowDetails" class="modal-body">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">Cliente n. <label id="lbl_idcliente"></label></div>
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-3 col-md-3">
-                                            <div class="form-group">
-                                                <label for="det_codicefiscale">C.Fisc.</label>
-                                                <input type="text" name="det_codicefiscale" id="det_codicefiscale">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-3 col-md-3">
-                                            <div class="form-group">
-                                                <label for="det_cognome">Cognome</label>
-                                                <input type="text" name="det_cognome" id="det_cognome">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-3 col-md-3">
-                                            <div class="form-group">
-                                                <label for="det_nome">Nome</label>
-                                                <input type="text" name="det_nome" id="det_nome">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-3 col-md-3">
-                                            <div class="form-group">
-                                                <label for="det_datanascita">Data di nascita</label>
-                                                <input type="text" name="det_datanascita" id="det_datanascita">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-3 col-md-3">
-                                            <div class="form-group">
-                                                <label for="det_email">E-mail</label>
-                                                <input type="text" name="det_email" id="det_email">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-3 col-md-3">
-                                            <div class="form-group">
-                                                <label for="det_telefono">Telefono</label>
-                                                <input type="text" name="det_telefono" id="det_telefono">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-3 col-md-3">
-                                            <div class="form-group">
-                                                <label for="det_cellulare">Cellulare</label>
-                                                <input type="text" name="det_cellulare" id="det_cellulare">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-3 col-md-3">
-                                            <div class="form-group">
-                                                <label for="det_professione">Professione</label>
-                                                <input type="text" name="det_professione" id="det_professione">
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">Polizza RCA</div>
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-2 col-md-2">
-                                            <div class="form-group">
-                                                <label for="det_provincia">Provincia</label>
-                                                <input type="text" name="det_provincia" id="det_provincia">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-2 col-md-2">
-                                            <div class="form-group">
-                                                <label for="det_comune">Comune</label>
-                                                <input type="text" name="det_comune" id="det_comune">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-2 col-md-2">
-                                            <div class="form-group">
-                                                <label for="det_tipoalimentazione">Tipo alim.</label>
-                                                <input type="text" name="det_tipoalimentazione" id="det_tipoalimentazione">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-2 col-md-2">
-                                            <div class="form-group">
-                                                <label for="det_cilindrata">Cilindrata</label>
-                                                <input type="text" name="det_cilindrata" id="det_cilindrata">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-2 col-md-2">
-                                            <div class="form-group">
-                                                <label for="det_classepotenza">Classe potenza</label>
-                                                <input type="text" name="det_classepotenza" id="det_classepotenza">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-2 col-md-2">
-                                            <div class="form-group">
-                                                <label for="det_classemerito">Classe merito</label>
-                                                <input type="text" name="det_classemerito" id="det_classemerito">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-2 col-md-2">
-                                            <div class="form-group">
-                                                <label for="det_marcaveicolo">Marca veicolo</label>
-                                                <input type="text" name="det_marcaveicolo" id="det_marcaveicolo">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-2 col-md-2">
-                                            <div class="form-group">
-                                                <label for="det_tipoveicolo">Tipo veicolo</label>
-                                                <input type="text" name="det_tipoveicolo" id="det_tipoveicolo">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-2 col-md-2">
-                                            <div class="form-group">
-                                                <label for="det_gruppoetaveicolo">Età veicolo</label>
-                                                <input type="text" name="det_gruppoetaveicolo" id="det_gruppoetaveicolo">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-2 col-md-2">
-                                            <div class="form-group">
-                                                <label for="det_numannisenzasinistri">Anni senza sin.</label>
-                                                <input type="text" name="det_numannisenzasinistri" id="det_numannisenzasinistri">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-2 col-md-2">
-                                            <div class="form-group">
-                                                <label for="det_numsinistridenunciati">Sin. ult. 2 anni</label>
-                                                <input type="text" name="det_numsinistridenunciati" id="det_numsinistridenunciati">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-2 col-md-2">
-                                            <div class="form-group">
-                                                <label for="det_massimale">Massimale</label>
-                                                <input type="text" name="det_massimale" id="det_massimale">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <!-- here it comes the detail body-->
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Chiudi</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
                         </div>
                     </div>
                 </div>
             </div>
+
             <table id="table-preventivi"
                    data-toggle="table-preventivi"
                    data-url="get_table_data.php?tabella=preventivi"
@@ -232,5 +82,105 @@ include_once "daelib.php";
     <?php
     include_once "footer.php";
     ?>
+    <script type="text/javascript">
+        var oForm = {
+            "table":"preventivi",
+            "labelForNew":"Nuovo preventivo",
+            "labelForEdit":"Modifica preventivo",
+            "keyfield":"idpreventivo",
+            "autoincrement":"false",
+            "readRecordFunction": {"name":"LeggiPreventivo","parameters":["idpreventivo"]},
+            "buttons": [
+                {"name": "btnChiudi","caption":"Chiudi","class":"btn btn-default","dismiss":"true"},
+                {"name": "btnSalva","caption":"Salva","class":"btn btn-primary","dismiss":"true"}],
+            "panels":[
+                {
+                    "name": "cliente", "description":"Cliente", "collapsable":"true","collapsed":"false",
+                    "rules": {
+                        "cognome": {required: true}
+                    },
+                    "messages": {
+                        "cognome": {required: "Campo obbligatorio!"}
+                    },
+                    "rows": [
+                        {"cells":[
+                            {"name": "codicefiscale", "label": "C.Fisc.", "labelsize":"2","fieldsize":"10", "type": "text", "visible": "true", "disabled": "false", "editable": "true"}
+                        ]},
+                        {"cells":[
+                            {"name": "cognome", "label": "Cognome", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"},
+                            {"name": "nome", "label": "Nome", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"}
+                        ]},
+                        {"cells":[
+                            {"name": "telefono", "label": "Telefono", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"},
+                            {"name": "cellulare", "label": "Cellulare", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"}
+                        ]},
+                        {"cells":[
+                            {"name": "datanascita", "label": "Data di nascita", "labelsize":"2","fieldsize":"4", "type": "date", "visible": "true", "disabled": "false", "editable": "true"},
+                            {"name": "idprofessione", "label": "Professione", "labelsize":"2","fieldsize":"4", "type": "select", "selectParams": {
+                                "source": "table",
+                                "table":"professioni",
+                                "keycolumn":"idprofessione",
+                                "displaycolumn":"descrizione",
+                                "filter":"attivo=1",
+                                "sortcolumn":"descrizione"
+                            },"visible": "true", "editable": "true"}
+                        ]},
+                        {"cells":[
+                            {"name": "email", "label": "Email", "labelsize":"2","fieldsize":"10", "type": "email", "visible": "true", "disabled": "false", "editable": "true"}
+                        ]}
+                    ]
+                },
+                {
+                    "name": "rca", "description":"RCA", "collapsable":"true","collapsed":"true",
+                    "rules": {
+                        "cognome": {required: true}
+                    },
+                    "messages": {
+                        "cognome": {required: "Campo obbligatorio!"}
+                    },
+                    "rows": [
+                        {"cells":[
+                            {"name": "idprovincia", "label": "Provincia", "labelsize":"2","fieldsize":"4", "type": "select", "selectParams": {
+                                "source": "table",
+                                "table":"zone",
+                                "keycolumn":"idcomune",
+                                "displaycolumn":"provincia",
+                                "filter":"attivo=1",
+                                "sortcolumn":"comune"
+                            },"visible": "true", "editable": "true"},
+                            {"name": "idcomune", "label": "Comune", "labelsize":"2","fieldsize":"4", "type": "select", "selectParams": {
+                                "source": "table",
+                                "table":"zone",
+                                "keycolumn":"idcomune",
+                                "displaycolumn":"comune",
+                                "filter":"attivo=1",
+                                "sortcolumn":"comune"
+                            },"visible": "true", "editable": "true"}
+                        ]},
+                        {"cells":[
+                            {"name": "idtipoalimentazione", "label": "Tipo Alim.", "labelsize":"2","fieldsize":"4", "type": "select", "selectParams": {
+                                "source": "table",
+                                "table":"tipialimentazione",
+                                "keycolumn":"idtipoalimentazione",
+                                "displaycolumn":"descrizione",
+                                "filter":"attivo=1",
+                                "sortcolumn":"descrizione"
+                            },"visible": "true", "editable": "true"},
+                            {"name": "idcilindrata", "label": "Cilindrata", "labelsize":"2","fieldsize":"4", "type": "select", "selectParams": {
+                                "source": "table",
+                                "table":"cilindrate",
+                                "keycolumn":"idcilindrata",
+                                "displaycolumn":"descrizione",
+                                "filter":"attivo=1",
+                                "sortcolumn":"descrizione"
+                            },"visible": "true", "editable": "true"}
+                        ]}
+                    ]
+                }
+            ]
+        };
+
+    </script>
+
     <script src="js/preventivi_functions.js" type="text/javascript"></script>
 

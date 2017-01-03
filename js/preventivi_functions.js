@@ -6,7 +6,7 @@ function operateFormatterPreventivi(value, row, index) {
     var idpreventivo = row.idpreventivo;
 
     return [
-        '<a id="aViewPreventivi" class="view" href="javascript:void(0)" data-toggle="modal" data-target="#dettaglioPreventivo" title="Visualizza">',
+        '<a id="aViewPreventivi" class="view" href="javascript:void(0)" data-toggle="modal" data-target="#detailModal" title="Visualizza">',
         '<i class="glyphicon glyphicon-eye-open"></i>',
         '</a>&nbsp;&nbsp;&nbsp;',
         '<a id="aEditPreventivi"  class="edit" href="modificaPreventivo.php?idpreventivo=' + idpreventivo + '" title=Modifica>',
@@ -88,57 +88,106 @@ jQuery().ready(function() {
     // L'altezza della tabella è fissata a 500px
     $table.bootstrapTable({height:500});
 
-    // Visualizzazione dettaglio preventivo con una finestra modal
-    $('#dettaglioPreventivo').modal({
+    $('#detailModal').modal({
         keyboard: true,
         backdrop: "static",
         show: false
-    }).on('show.bs.modal', function () {
-        console.log("leggipreventivo");
+    }).on('show.bs.modal', function (event) {
+        if (event.relatedTarget) {
+            var that = $(this);
+
+            var payload = {};
+
+            if (oForm.readRecordFunction) {
+                payload[oForm.keyfield] = selectedRow[oForm.keyfield];
+                payload.ajax_function = oForm.readRecordFunction.name;
+            } else {
+                payload.table = oForm.table;
+                payload.keyfield = oForm.keyfield;
+                payload.keyvalue = selectedRow[oForm.keyfield];
+                payload.ajax_function = "LeggiRecord";
+            }
+
+            console.log(payload);
+
+            $.when(ReadRecord(payload)).done(function(result) {
+                console.log(result);
+                var value;
+                var html = '';
+                html += '<div class="panel-group" id="accordion">';
+                $.each(oForm.panels, function (i, oPanel) {
+                    html += '<div class="panel panel-info">';
+                    html += '<div class="panel-heading">' + oPanel.description + '</div>';
+                    html += '<div class=panel-body>';
+                    html += '<form class="form-horizontal" name=frm' + oPanel.name + ' id=frm' + oPanel.name + '>';
+
+                    $.each(oPanel.rows, function (i, oRow) {
+                        html += '<div class="form-group">';
+                        $.each(oRow.cells, function (i, oCell) {
+                            if (oCell.visible === "true") {
+                                html += '<div class="cell">';
+                                html += '<label class="control-label col-sm-' + oCell.labelsize + '" for="' + oCell.name + '">' + oCell.label + '</label>';
+                                html += '<div class="col-sm-' + oCell.fieldsize + '">';
+                                value = (result[oPanel.name][oCell.name] ? result[oPanel.name][oCell.name] : "");
+                                switch (oCell.type) {
+                                    case "password":
+                                        html += '<input disabled type="' + oCell.type + '" class="form-control full-width" id="' + oCell.name + '" name="' + oCell.name + '" value="' + value + '"/>';
+                                        break;
+                                    case "boolean":
+                                        html += '<input disabled type="checkbox" class="form-control full-width" id="' + oCell.name + '" name="' + oCell.name + '" ' + (value === "1" ? "checked" : "") + '/>';
+                                        break;
+                                    case "color":
+                                        html += '<input disabled type="color" class="form-control full-width" id="' + oCell.name + '" name="' + oCell.name + '" value="' + value + '"/>';
+                                        break;
+                                    case "date":
+                                        html += '<input disabled type="text" class="form-control full-width" id="' + oCell.name + '" name="' + oCell.name + '" value="' + value + '"/>';
+                                        break;
+                                    case "image":
+                                        html += '<input disabled type="' + oCell.type + '" src="images/' + value + '" class="form-control full-width" id="' + oCell.name + '" name="' + oCell.name + '" value="' + value + '" style="width:48px"/>';
+                                        break;
+                                    case "select":
+                                        console.log(oCell.selectParams.displaycolumn);
+                                        value = (result[oPanel.name][oCell.selectParams.displaycolumn] ? result[oPanel.name][oCell.selectParams.displaycolumn] : "");
+                                        html += '<input disabled type="' + oCell.type + '" class="form-control full-width" id="' + oCell.name + '" name="' + oCell.name + '" value="' + value + '"/>';
+                                        break;
+                                    default:
+                                        html += '<input disabled type="' + oCell.type + '" class="form-control full-width" id="' + oCell.name + '" name="' + oCell.name + '" value="' + value + '"/>';
+                                }
+                                html += '</div>';  //class=col-sm
+                                html += '</div>';  //class=cell
+                            }
+                        });
+                        html += '</div>';  //class=form-group
+                    });
+                    html += '</form>';
+                    html += '</div>';  //class=panel-body
+                    html += '</div>';  //class=panel-info
+
+                });
+                html += '</div>';  //class=panel-group
+
+                that.find('#rowDetails').html(html);
+            });
+        }
+    });
+
+    function ReadRecord(payload) {
+        var deferred = $.Deferred();
         $.ajax({
             url: "ajax_responder.php",
             dataType: "json",
             type: "post",
-            data: {
-                idpreventivo: selectedRow["idpreventivo"],
-                ajax_function: "LeggiPreventivo"},
+            data: payload,
             cache: false,
             success: function (response) {
-                var res = response['result'];
-                console.log(res);
-                if (res != "NOT_FOUND") { // se il record viene trovato instanzio le celle della tabella con i suoi valori
-                    $("#lbl_idpreventivo").text(res['preventivo']['idpreventivo']);
-                    $("#lbl_idcliente").text(res['cliente']['idcliente']);
-                    $("#det_codicefiscale").val(res['cliente']['codicefiscale']);
-                    $("#det_cognome").val(res['cliente']['cognome']);
-                    $("#det_nome").val(res['cliente']['nome']);
-                    $("#det_datanascita").val(res['cliente']['datanascita']);
-                    $("#det_email").val(res['cliente']['email']);
-                    $("#det_telefono").val(res['cliente']['telefono']);
-                    $("#det_cellulare").val(res['cliente']['cellulare']);
-                    $("#det_professione").val(res['cliente']['idprofessione']);
-
-                    $("#det_provincia").val(res['rca']['provincia']);
-                    $("#det_comune").val(res['rca']['comune']);
-                    $("#det_cilindrata").val(res['rca']['idcilindrata']);
-                    $("#det_tipoalimentazione").val(res['rca']['idtipoalimentazione']);
-                    $("#det_classepotenza").val(res['rca']['idclassepotenza']);
-                    $("#det_classemerito").val(res['rca']['classemerito']);
-
-                    $("#det_marcaveicolo").val(res['rca']['idmarcaveicolo']);
-                    $("#det_tipoveicolo").val(res['rca']['idtipoveicolo']);
-                    $("#det_gruppoetaveicolo").val(res['rca']['idgruppoetaveicolo']);
-                    $("#det_numannisenzasinistri").val(res['rca']['idnumannisenzasinistri']);
-                    $("#det_numsinistridenunciati").val(res['rca']['idnumsinistridenunciati']);
-                    $("#det_massimale").val(res['rca']['idmassimale']);
-
-                } else {
-                    toastr.error("ERRORE: Record non trovato!");
-                }
-            }, // in caso di errore mostro il messaggio di errore
+                var res = response["result"];
+                deferred.resolve(res);
+            },
             error: function (response) {
-                toastr.error("ERRORE: " + response);
+                deferred.reject(response);
             }
         });
-    });
+        return(deferred);
+    }
+
 });

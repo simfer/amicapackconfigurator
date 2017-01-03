@@ -407,34 +407,58 @@ function LeggiCoefficienteAugusta()
  ***************************************/
 function LeggiRecord()
 {
-    $thetable = $_POST['thetable'];
+    $thetable = $_POST['table'];
     $keyfield = $_POST['keyfield'];
     $keyvalue = $_POST['keyvalue'];
+
+    $sql = 'SELECT * FROM ' . $thetable . ' WHERE ' . $keyfield . ' = "' . $keyvalue . '"';
 
     if ($thetable && $keyfield && $keyvalue) {
         try {
             $conn = new PDO (APC_DB_DSN, APC_DB_USER, APC_DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $sql = "SELECT * FROM " . $thetable . " WHERE " . $keyfield . " = " . $keyvalue;
             $stmt = $conn->prepare($sql);
 
             $stmt->execute();
-            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            echo json_encode(array(
-                'status' => 'success',
-                'result' => $data
-            ));
-
+            if ($stmt->rowCount() > 0) {
+                // fetch the row
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                echo json_encode(array(
+                    'status' => 'success',
+                    'result' => $row,
+                    'sql' => $sql
+                ));
+            } else {
+                try {
+                    throw new Exception('Value not found in function ' . __FUNCTION__);
+                } catch (Exception $e) {
+                    echo json_encode(array(
+                        'status' => 'error',
+                        'result' => $e->getMessage(),
+                        'sql' => $sql
+                    ));
+                }
+            }
+            $conn = null;
         } catch (Exception $e) {
             echo json_encode(array(
                 'status' => 'error',
-                'result' => $e->getMessage()
+                'result' => $e->getMessage(),
+                'sql' => $sql
+            ));
+        }
+    } else {
+        try {
+            throw new Exception('Missing parameters for function ' . __FUNCTION__);
+        } catch (Exception $e) {
+            echo json_encode(array(
+                'status' => 'error',
+                'result' => $e->getMessage(),
+                'sql' => $sql
             ));
         }
     }
-    $conn = null;
 }
 
 /***************************************
@@ -469,13 +493,17 @@ function LeggiPreventivo()
                 $accessoriSi = ($preventivo["accessori"] == "SI" ? true : false);
                 $copertureaggiuntiveSi = ($preventivo["copertureaggiuntive"] == "SI" ? true : false);
 
-                $sqlCliente = "select a.* from clienti a WHERE a.attivo=1 and a.idcliente='" . $idcliente . "'";
+                $sqlCliente = "select a.*,b.descrizione from clienti a 
+                                inner join professioni b on a.idprofessione=b.idprofessione 
+                                WHERE a.attivo=1 and a.idcliente='" . $idcliente . "'";
                 $stmtCliente = $conn->prepare($sqlCliente);
                 $stmtCliente->execute();
                 $cliente = $stmtCliente->fetch(PDO::FETCH_ASSOC);
 
                 if ($rcaSi) {
-                    $sqlRCA = "select * from polizzerca a inner join zone b on a.idcomune = b.idcomune WHERE a.attivo=1 and a.idpreventivo='" . $idpreventivo . "'";
+                    $sqlRCA = "select a.*,b.comune,b.provincia from polizzerca a 
+                                inner join zone b on a.idcomune = b.idcomune 
+                                WHERE a.attivo=1 and a.idpreventivo='" . $idpreventivo . "'";
                     $stmtRCA = $conn->prepare($sqlRCA);
                     $stmtRCA->execute();
                     $rca = $stmtRCA->fetch(PDO::FETCH_ASSOC);

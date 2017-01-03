@@ -21,18 +21,7 @@ include_once "daelib.php";
                 </button>
             </div>
             <style type="text/css">
-                .table-user-information > tbody > tr {
-                    border-top: 1px solid rgb(221, 221, 221);
-                }
-
-                .table-user-information > tbody > tr:first-child {
-                    border-top: 0;
-                }
-
-                .table-user-information > tbody > tr > td {
-                    border-top: 0;
-                }
-                #editModal .modal-dialog  {width:60%;}
+                .modal-dialog  {width:60%;}
             </style>
 
             <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
@@ -54,8 +43,7 @@ include_once "daelib.php";
                 </div>
             </div>
 
-            <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModal"
-                 aria-hidden="true">
+            <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModal" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -66,7 +54,7 @@ include_once "daelib.php";
                             <!-- here it comes the detail body-->
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Chiudi</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
                         </div>
                     </div>
                 </div>
@@ -132,7 +120,7 @@ include_once "daelib.php";
                             {"name": "username", "label": "Username", "labelsize":"2","fieldsize":"10", "type": "text", "visible": "true", "disabled": "false", "editable": "true"}
                         ]},
                         {"cells":[
-                            {"name": "password", "label": "Password", "labelsize":"2","fieldsize":"4", "type": "password", "visible": "false", "disabled": "false", "editable": "true"}
+                            {"name": "password", "label": "Password", "labelsize":"2","fieldsize":"10", "type": "password", "visible": "true", "disabled": "false", "editable": "true"}
                         ]},
                         {"cells":[
                             {"name": "cognome", "label": "Cognome", "labelsize":"2","fieldsize":"4", "type": "text", "visible": "true", "disabled": "false", "editable": "true"},

@@ -508,5 +508,5 @@ include_once "daelib.php";
 
     </script>
 
-    <script src="daeSpinner.js" type="text/javascript"></script>
+    <script src="js/daeSpinner.js" type="text/javascript"></script>
 

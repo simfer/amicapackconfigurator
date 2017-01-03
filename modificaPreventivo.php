@@ -2517,5 +2517,5 @@ if (isset($_GET['datitest']) && !empty($_GET['datitest'])) {
         });
 
     </script>
-    <script src="daeSpinner.js" type="text/javascript"></script>
+    <script src="js/daeSpinner.js" type="text/javascript"></script>
 
